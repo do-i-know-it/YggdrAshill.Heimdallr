@@ -3,7 +3,6 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-
     [TestFixture(TestOf = typeof(Observation<>))]
     internal class ObservationSpecification
     {
