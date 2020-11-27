@@ -55,7 +55,7 @@ namespace YggdrAshill.Heimdallr.Specification
         [Test]
         public void CannotSubscribeNull()
         {
-            var publication = new Publication<Item>(_ => new Unsubscription());
+            var publication = new Publication<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {

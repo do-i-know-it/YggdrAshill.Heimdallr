@@ -9,6 +9,8 @@ namespace YggdrAshill.Heimdallr
     {
         private readonly Func<IIndication<TItem>, IExecution> onExecuted;
 
+        #region Constructor
+
         public Observation(Func<IIndication<TItem>, IExecution> onExecuted)
         {
             if (onExecuted == null)
@@ -19,6 +21,18 @@ namespace YggdrAshill.Heimdallr
             this.onExecuted = onExecuted;
         }
 
+        public Observation()
+        {
+            onExecuted = (_) =>
+            {
+                return new Execution();
+            };
+        }
+
+        #endregion
+
+        #region IObservation
+
         public IExecution Activate(IIndication<TItem> indication)
         {
             if (indication == null)
@@ -28,5 +42,7 @@ namespace YggdrAshill.Heimdallr
 
             return onExecuted.Invoke(indication);
         }
+
+        #endregion
     }
 }

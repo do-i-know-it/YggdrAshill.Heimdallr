@@ -9,6 +9,8 @@ namespace YggdrAshill.Heimdallr
     {
         private readonly Func<IIndication<TItem>, IUnsubscription> onSubscribed;
 
+        #region Constructor
+
         public Publication(Func<IIndication<TItem>, IUnsubscription> onSubscribed)
         {
             if (onSubscribed == null)
@@ -19,6 +21,18 @@ namespace YggdrAshill.Heimdallr
             this.onSubscribed = onSubscribed;
         }
 
+        public Publication()
+        {
+            onSubscribed = (_) =>
+            {
+                return new Unsubscription();
+            };
+        }
+
+        #endregion
+
+        #region IPublication
+
         public IUnsubscription Subscribe(IIndication<TItem> indication)
         {
             if (indication == null)
@@ -28,5 +42,7 @@ namespace YggdrAshill.Heimdallr
 
             return onSubscribed.Invoke(indication);
         }
+
+        #endregion
     }
 }

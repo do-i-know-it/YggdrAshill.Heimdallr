@@ -1,16 +1,17 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using YggdrAshill.Heimdallr.Conversion;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Indication<>))]
-    internal class IndicationSpecification
+    [TestFixture(TestOf = typeof(Notation<>))]
+    internal class NotationSpecification
     {
         [Test]
-        public void ShouldExecuteActionWhenHasIndicated()
+        public void ShouldExecuteFunctionWhenHasNotated()
         {
             var expected = false;
-            var indication = new Indication<Item>(item =>
+            var notation = new Notation<Item>(item =>
             {
                 if (item == null)
                 {
@@ -18,9 +19,11 @@ namespace YggdrAshill.Heimdallr.Specification
                 }
 
                 expected = true;
+
+                return new Note("");
             });
 
-            indication.Indicate(new Item());
+            notation.Notate(new Item());
 
             Assert.IsTrue(expected);
         }
@@ -30,7 +33,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var indication = new Indication<Item>(null);
+                var notation = new Notation<Item>(null);
             });
         }
     }

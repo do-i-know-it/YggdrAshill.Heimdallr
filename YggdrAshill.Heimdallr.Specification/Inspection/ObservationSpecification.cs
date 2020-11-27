@@ -3,7 +3,6 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-
     [TestFixture(TestOf = typeof(Observation<>))]
     internal class ObservationSpecification
     {
@@ -54,7 +53,7 @@ namespace YggdrAshill.Heimdallr.Specification
         [Test]
         public void CannotActivateNull()
         {
-            var observation = new Observation<Item>(_ => new Execution());
+            var observation = new Observation<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {

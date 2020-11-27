@@ -22,11 +22,16 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldExecuteConnectedIndicationWhenHasIndicated()
+        public void ShouldSendItemToSubscribedIndicationWhenHasIndicated()
         {
             var expected = false;
-            var indication = new Indication<Item>(_ =>
+            var indication = new Indication<Item>(item =>
             {
+                if (item == null)
+                {
+                    throw new ArgumentNullException(nameof(item));
+                }
+
                 expected = true;
             });
 
@@ -40,17 +45,45 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldNotExecuteDisconnectedIndicationWhenHasIndicated()
+        public void ShouldNotSendItemToUnsubscribedIndicationWhenHasIndicated()
         {
             var expected = false;
-            var indication = new Indication<Item>(_ =>
+            var indication = new Indication<Item>(item =>
             {
+                if (item == null)
+                {
+                    throw new ArgumentNullException(nameof(item));
+                }
+
                 expected = true;
             });
 
             var unsubscription = announcement.Subscribe(indication);
 
             unsubscription.Unsubscribe();
+
+            announcement.Indicate(new Item());
+
+            Assert.IsFalse(expected);
+        }
+
+        [Test]
+        public void ShouldNotSendItemAfterHasUnsubscribed()
+        {
+            var expected = false;
+            var indication = new Indication<Item>(item =>
+            {
+                if (item == null)
+                {
+                    throw new ArgumentNullException(nameof(item));
+                }
+
+                expected = true;
+            });
+
+            var unsubscription = announcement.Subscribe(indication);
+
+            announcement.Unsubscribe();
 
             announcement.Indicate(new Item());
 
