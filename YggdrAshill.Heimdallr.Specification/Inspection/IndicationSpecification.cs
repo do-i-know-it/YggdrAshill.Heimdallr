@@ -10,8 +10,13 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldExecuteActionWhenHasIndicated()
         {
             var expected = false;
-            var indication = new Indication<Item>(_ =>
+            var indication = new Indication<Item>(item =>
             {
+                if (item == null)
+                {
+                    throw new ArgumentNullException(nameof(item));
+                }
+
                 expected = true;
             });
 
