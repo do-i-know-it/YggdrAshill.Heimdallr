@@ -3,22 +3,22 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Source<>))]
-    internal class SourceSpecification
+    [TestFixture(TestOf = typeof(Inspection<>))]
+    internal class InspectionSpecification
     {
-        private Source<Item> source;
+        private Inspection<Item> inspection;
 
         [SetUp]
         public void SetUp()
         {
-            source = new Source<Item>(() => new Item());
+            inspection = new Inspection<Item>(() => new Item());
         }
 
         [TearDown]
         public void TearDown()
         {
-            source.Unsubscribe();
-            source = default;
+            inspection.Unsubscribe();
+            inspection = default;
         }
 
         [Test]
@@ -35,9 +35,9 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var unsubscription = source.Subscribe(indication);
+            var unsubscription = inspection.Subscribe(indication);
 
-            var execution = source.Originate();
+            var execution = inspection.Originate();
 
             execution.Execute();
 
@@ -60,9 +60,9 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var unsubscription = source.Subscribe(indication);
+            var unsubscription = inspection.Subscribe(indication);
 
-            var execution = source.Originate();
+            var execution = inspection.Originate();
 
             unsubscription.Unsubscribe();
 
@@ -85,11 +85,11 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            source.Subscribe(indication);
+            inspection.Subscribe(indication);
 
-            var execution = source.Originate();
+            var execution = inspection.Originate();
 
-            source.Unsubscribe();
+            inspection.Unsubscribe();
 
             execution.Execute();
 
@@ -101,7 +101,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var source = new Source<Item>(null);
+                var inspection = new Inspection<Item>(null);
             });
         }
 
@@ -110,7 +110,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var unsubscription = source.Subscribe(null);
+                var unsubscription = inspection.Subscribe(null);
             });
         }
     }

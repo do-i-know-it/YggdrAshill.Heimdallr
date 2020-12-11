@@ -1,35 +1,32 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
-using YggdrAshill.Heimdallr.Inception;
 using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Source<TItem> :
-        ISource<TItem>
+    public sealed class Inspection<TItem> :
+        IInspection<TItem>
         where TItem : IItem
     {
-        private readonly IInspection<TItem> initiation;
+        private readonly IExecution execution;
 
         private readonly IAnnouncement<TItem> announcement;
 
         #region Constructor
 
-        public Source(Func<TItem> onExecuted)
+        public Inspection(Func<TItem> onExecuted)
         {
             if (onExecuted == null)
             {
                 throw new ArgumentNullException(nameof(onExecuted));
             }
 
-            initiation = new Inspection<TItem>(onExecuted);
+            execution = new Execution(() =>
+            {
+                var executed = onExecuted.Invoke();
 
-            announcement = new Announcement<TItem>();
-        }
+                announcement.Indicate(executed);
+            });
 
-        public Source()
-        {
-            initiation = new Inspection<TItem>();
-         
             announcement = new Announcement<TItem>();
         }
 
@@ -62,7 +59,7 @@ namespace YggdrAshill.Heimdallr
 
         public IExecution Originate()
         {
-            return initiation.Activate(announcement);
+            return execution;
         }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿using YggdrAshill.Heimdallr.Inception;
+﻿using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
 namespace YggdrAshill.Heimdallr

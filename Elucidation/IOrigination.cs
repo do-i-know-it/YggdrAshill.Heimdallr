@@ -1,4 +1,4 @@
-﻿namespace YggdrAshill.Heimdallr.Inception
+﻿namespace YggdrAshill.Heimdallr.Elucidation
 {
     public interface IOrigination
     {
