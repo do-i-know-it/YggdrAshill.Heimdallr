@@ -2,9 +2,9 @@
 
 namespace YggdrAshill.Heimdallr.Inception
 {
-    public interface IInitiation<TItem>
+    public interface IInspection<TItem>
         where TItem : IItem
     {
-        IExecution Initiate(IIndication<TItem> indication);
+        IExecution Activate(IIndication<TItem> indication);
     }
 }

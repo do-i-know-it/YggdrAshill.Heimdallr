@@ -4,32 +4,32 @@ using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Initiation<TItem> :
-        IInitiation<TItem>
+    public sealed class Inspection<TItem> :
+        IInspection<TItem>
         where TItem : IItem
     {
-        private readonly Func<IIndication<TItem>, IExecution> onIncepted;
+        private readonly Func<IIndication<TItem>, IExecution> onActivated;
 
         #region Constructor
 
-        public Initiation(Func<IIndication<TItem>, IExecution> onIncepted)
+        public Inspection(Func<IIndication<TItem>, IExecution> onActivated)
         {
-            if (onIncepted == null)
+            if (onActivated == null)
             {
-                throw new ArgumentNullException(nameof(onIncepted));
+                throw new ArgumentNullException(nameof(onActivated));
             }
 
-            this.onIncepted = onIncepted;
+            this.onActivated = onActivated;
         }
 
-        public Initiation(Func<TItem> onExecuted)
+        public Inspection(Func<TItem> onExecuted)
         {
             if (onExecuted == null)
             {
                 throw new ArgumentNullException(nameof(onExecuted));
             }
 
-            onIncepted = (indication) =>
+            onActivated = (indication) =>
             {
                 return new Execution(() =>
                 {
@@ -40,9 +40,9 @@ namespace YggdrAshill.Heimdallr
             };
         }
 
-        public Initiation()
+        public Inspection()
         {
-            onIncepted = (_) =>
+            onActivated = (_) =>
             {
                 return new Execution();
             };
@@ -50,16 +50,16 @@ namespace YggdrAshill.Heimdallr
 
         #endregion
 
-        #region IInitiation
+        #region IInspection
 
-        public IExecution Initiate(IIndication<TItem> indication)
+        public IExecution Activate(IIndication<TItem> indication)
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return onIncepted.Invoke(indication);
+            return onActivated.Invoke(indication);
         }
 
         #endregion

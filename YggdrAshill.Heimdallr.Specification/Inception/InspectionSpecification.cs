@@ -5,30 +5,30 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Initiation<>))]
-    internal class InitiationSpecification
+    [TestFixture(TestOf = typeof(Inspection<>))]
+    internal class InspectionSpecification
     {
         [Test]
-        public void ShouldExecuteFunctionWhenHasInitiated()
+        public void ShouldExecuteFunctionWhenHasActivated()
         {
             var expected = false;
-            var initiation = new Initiation<Item>((_) =>
+            var initiation = new Inspection<Item>((_) =>
             {
                 expected = true;
 
                 return new Execution();
             });
 
-            var execution = initiation.Initiate(new Indication<Item>());
+            var execution = initiation.Activate(new Indication<Item>());
 
             Assert.IsTrue(expected);
         }
 
         [Test]
-        public void ShouldExecuteAfterHasInitiated()
+        public void ShouldExecuteAfterHasActivated()
         {
             var expected = false;
-            var initiation = new Initiation<Item>((_) =>
+            var initiation = new Inspection<Item>((_) =>
             {
                 return new Execution(() =>
                 {
@@ -36,7 +36,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 });
             });
 
-            var execution = initiation.Initiate(new Indication<Item>());
+            var execution = initiation.Activate(new Indication<Item>());
 
             execution.Execute();
 
@@ -46,7 +46,7 @@ namespace YggdrAshill.Heimdallr.Specification
         [Test]
         public void ShouldSendItemWhenHasExecuted()
         {
-            var initiation = new Initiation<Item>(() =>
+            var initiation = new Inspection<Item>(() =>
             {
                 return new Item();
             });
@@ -62,7 +62,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var execution = initiation.Initiate(indication);
+            var execution = initiation.Activate(indication);
 
             execution.Execute();
 
@@ -74,23 +74,23 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var initiation = new Initiation<Item>((Func<IIndication<Item>, IExecution>)null);
+                var initiation = new Inspection<Item>((Func<IIndication<Item>, IExecution>)null);
             });
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var initiation = new Initiation<Item>((Func<Item>)null);
+                var initiation = new Inspection<Item>((Func<Item>)null);
             });
         }
 
         [Test]
-        public void CannotInceptNull()
+        public void CannotActivateWithNull()
         {
-            var initiation = new Initiation<Item>();
+            var initiation = new Inspection<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var execution = initiation.Initiate(null);
+                var execution = initiation.Activate(null);
             });
         }
     }

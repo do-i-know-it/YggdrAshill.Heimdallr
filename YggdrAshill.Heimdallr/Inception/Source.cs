@@ -8,7 +8,7 @@ namespace YggdrAshill.Heimdallr
         ISource<TItem>
         where TItem : IItem
     {
-        private readonly IInitiation<TItem> initiation;
+        private readonly IInspection<TItem> initiation;
 
         private readonly IAnnouncement<TItem> announcement;
 
@@ -21,14 +21,14 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(onExecuted));
             }
 
-            initiation = new Initiation<TItem>(onExecuted);
+            initiation = new Inspection<TItem>(onExecuted);
 
             announcement = new Announcement<TItem>();
         }
 
         public Source()
         {
-            initiation = new Initiation<TItem>();
+            initiation = new Inspection<TItem>();
          
             announcement = new Announcement<TItem>();
         }
@@ -62,7 +62,7 @@ namespace YggdrAshill.Heimdallr
 
         public IExecution Originate()
         {
-            return initiation.Initiate(announcement);
+            return initiation.Activate(announcement);
         }
 
         #endregion
