@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using YggdrAshill.Heimdallr.Items;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
