@@ -1,7 +1,7 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
-namespace YggdrAshill.Heimdallr.Items
+namespace YggdrAshill.Heimdallr
 {
     public struct Battery :
         IItem,
