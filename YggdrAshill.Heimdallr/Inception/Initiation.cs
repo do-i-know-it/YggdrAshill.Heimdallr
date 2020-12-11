@@ -4,15 +4,15 @@ using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Source<TItem> :
-        ISource<TItem>
+    public sealed class Initiation<TItem> :
+        IInitiation<TItem>
         where TItem : IItem
     {
         private readonly Func<IIndication<TItem>, IExecution> onIncepted;
 
         #region Constructor
 
-        public Source(Func<IIndication<TItem>, IExecution> onIncepted)
+        public Initiation(Func<IIndication<TItem>, IExecution> onIncepted)
         {
             if (onIncepted == null)
             {
@@ -22,7 +22,7 @@ namespace YggdrAshill.Heimdallr
             this.onIncepted = onIncepted;
         }
 
-        public Source(Func<TItem> onExecuted)
+        public Initiation(Func<TItem> onExecuted)
         {
             if (onExecuted == null)
             {
@@ -40,7 +40,7 @@ namespace YggdrAshill.Heimdallr
             };
         }
 
-        public Source()
+        public Initiation()
         {
             onIncepted = (_) =>
             {
@@ -50,9 +50,9 @@ namespace YggdrAshill.Heimdallr
 
         #endregion
 
-        #region ISource
+        #region IInitiation
 
-        public IExecution Incept(IIndication<TItem> indication)
+        public IExecution Initiate(IIndication<TItem> indication)
         {
             if (indication == null)
             {

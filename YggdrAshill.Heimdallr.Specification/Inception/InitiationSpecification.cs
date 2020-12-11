@@ -5,30 +5,30 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Source<>))]
-    internal class SourceSpecification
+    [TestFixture(TestOf = typeof(Initiation<>))]
+    internal class InitiationSpecification
     {
         [Test]
-        public void ShouldExecuteFunctionWhenHasIncepted()
+        public void ShouldExecuteFunctionWhenHasInitiated()
         {
             var expected = false;
-            var source = new Source<Item>((_) =>
+            var initiation = new Initiation<Item>((_) =>
             {
                 expected = true;
 
                 return new Execution();
             });
 
-            var execution = source.Incept(new Indication<Item>());
+            var execution = initiation.Initiate(new Indication<Item>());
 
             Assert.IsTrue(expected);
         }
 
         [Test]
-        public void ShouldExecuteAfterHasIncepted()
+        public void ShouldExecuteAfterHasInitiated()
         {
             var expected = false;
-            var source = new Source<Item>((_) =>
+            var initiation = new Initiation<Item>((_) =>
             {
                 return new Execution(() =>
                 {
@@ -36,7 +36,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 });
             });
 
-            var execution = source.Incept(new Indication<Item>());
+            var execution = initiation.Initiate(new Indication<Item>());
 
             execution.Execute();
 
@@ -46,7 +46,7 @@ namespace YggdrAshill.Heimdallr.Specification
         [Test]
         public void ShouldSendItemWhenHasExecuted()
         {
-            var source = new Source<Item>(() =>
+            var initiation = new Initiation<Item>(() =>
             {
                 return new Item();
             });
@@ -62,7 +62,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var execution = source.Incept(indication);
+            var execution = initiation.Initiate(indication);
 
             execution.Execute();
 
@@ -74,23 +74,23 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var source = new Source<Item>((Func<IIndication<Item>, IExecution>)null);
+                var initiation = new Initiation<Item>((Func<IIndication<Item>, IExecution>)null);
             });
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var source = new Source<Item>((Func<Item>)null);
+                var initiation = new Initiation<Item>((Func<Item>)null);
             });
         }
 
         [Test]
         public void CannotInceptNull()
         {
-            var source = new Source<Item>();
+            var initiation = new Initiation<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var execution = source.Incept(null);
+                var execution = initiation.Initiate(null);
             });
         }
     }
