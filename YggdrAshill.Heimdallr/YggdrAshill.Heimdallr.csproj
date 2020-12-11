@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Conversion\Conversion.csproj" />
+    <ProjectReference Include="..\Elucidation\Elucidation.csproj" />
     <ProjectReference Include="..\Inspection\Inspection.csproj" />
   </ItemGroup>
 

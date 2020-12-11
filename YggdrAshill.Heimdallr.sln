@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YggdrAshill.Heimdallr", "Yg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspection", "Inspection\Inspection.csproj", "{E2CBE3C1-97C5-46D8-9322-4C6318B79CEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversion", "Conversion\Conversion.csproj", "{67DB9275-D958-449D-8040-3F7F3DB1D5C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conversion", "Conversion\Conversion.csproj", "{67DB9275-D958-449D-8040-3F7F3DB1D5C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elucidation", "Elucidation\Elucidation.csproj", "{A6F1D3A9-2C5F-4039-939D-C55713EF1DCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{67DB9275-D958-449D-8040-3F7F3DB1D5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67DB9275-D958-449D-8040-3F7F3DB1D5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67DB9275-D958-449D-8040-3F7F3DB1D5C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F1D3A9-2C5F-4039-939D-C55713EF1DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F1D3A9-2C5F-4039-939D-C55713EF1DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F1D3A9-2C5F-4039-939D-C55713EF1DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F1D3A9-2C5F-4039-939D-C55713EF1DCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
