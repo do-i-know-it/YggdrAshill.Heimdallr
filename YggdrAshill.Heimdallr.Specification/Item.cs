@@ -1,4 +1,4 @@
-using YggdrAshill.Heimdallr.Inspection;
+using YggdrAshill.Heimdallr.Elucidation;
 
 namespace YggdrAshill.Heimdallr.Specification
 {

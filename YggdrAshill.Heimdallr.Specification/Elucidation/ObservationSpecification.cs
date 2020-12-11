@@ -3,21 +3,21 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Publication<>))]
-    internal class PublicationSpecification
+    [TestFixture(TestOf = typeof(Observation<>))]
+    internal class ObservationSpecification
     {
         [Test]
         public void ShouldExecuteFunctionWhenHasSubscribed()
         {
             var expected = false;
-            var publication = new Publication<Item>(_ =>
+            var observation = new Observation<Item>(_ =>
             {
                 expected = true;
 
                 return new Unsubscription();
             });
 
-            var unsubscription = publication.Subscribe(new Indication<Item>());
+            var unsubscription = observation.Subscribe(new Indication<Item>());
 
             Assert.IsTrue(expected);
 
@@ -28,7 +28,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldUnsubscribeAfterHasSubscribed()
         {
             var expected = false;
-            var publication = new Publication<Item>(_ =>
+            var observation = new Observation<Item>(_ =>
             {
                 return new Unsubscription(() =>
                 {
@@ -36,7 +36,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 });
             });
 
-            var unsubscription = publication.Subscribe(new Indication<Item>());
+            var unsubscription = observation.Subscribe(new Indication<Item>());
 
             unsubscription.Unsubscribe();
 
@@ -48,18 +48,18 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var publication = new Publication<Item>(null);
+                var observation = new Observation<Item>(null);
             });
         }
 
         [Test]
         public void CannotSubscribeNull()
         {
-            var publication = new Publication<Item>();
+            var observation = new Observation<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var unsubscription = publication.Subscribe(null);
+                var unsubscription = observation.Subscribe(null);
             });
         }
     }

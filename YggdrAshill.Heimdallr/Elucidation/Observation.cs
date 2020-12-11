@@ -1,17 +1,17 @@
-﻿using YggdrAshill.Heimdallr.Inspection;
+﻿using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Publication<TItem> :
-        IPublication<TItem>
+    public sealed class Observation<TItem> :
+        IObservation<TItem>
         where TItem : IItem
     {
         private readonly Func<IIndication<TItem>, IUnsubscription> onSubscribed;
 
         #region Constructor
 
-        public Publication(Func<IIndication<TItem>, IUnsubscription> onSubscribed)
+        public Observation(Func<IIndication<TItem>, IUnsubscription> onSubscribed)
         {
             if (onSubscribed == null)
             {
@@ -21,7 +21,7 @@ namespace YggdrAshill.Heimdallr
             this.onSubscribed = onSubscribed;
         }
 
-        public Publication()
+        public Observation()
         {
             onSubscribed = (_) =>
             {
@@ -31,7 +31,7 @@ namespace YggdrAshill.Heimdallr
 
         #endregion
 
-        #region IPublication
+        #region IObservation
 
         public IUnsubscription Subscribe(IIndication<TItem> indication)
         {

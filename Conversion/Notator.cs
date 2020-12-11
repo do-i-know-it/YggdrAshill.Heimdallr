@@ -1,17 +1,17 @@
-﻿using YggdrAshill.Heimdallr.Inspection;
+﻿using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
 namespace YggdrAshill.Heimdallr.Conversion
 {
     public sealed class Notator<TItem> :
-        IPublication<Note>
+        IObservation<Note>
         where TItem : IItem
     {
-        private readonly IPublication<TItem> publication;
+        private readonly IObservation<TItem> publication;
 
         private readonly INotation<TItem> notation;
 
-        public Notator(IPublication<TItem> publication, INotation<TItem> notation)
+        public Notator(IObservation<TItem> publication, INotation<TItem> notation)
         {
             if (publication == null)
             {

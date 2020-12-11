@@ -1,4 +1,4 @@
-using YggdrAshill.Heimdallr.Inspection;
+using YggdrAshill.Heimdallr.Elucidation;
 using YggdrAshill.Heimdallr.Conversion;
 using System;
 
