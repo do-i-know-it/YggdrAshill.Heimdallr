@@ -1,5 +1,5 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
-using YggdrAshill.Heimdallr.Incepction;
+using YggdrAshill.Heimdallr.Inception;
 using System;
 
 namespace YggdrAshill.Heimdallr

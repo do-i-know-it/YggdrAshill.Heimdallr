@@ -1,6 +1,6 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
 
-namespace YggdrAshill.Heimdallr.Incepction
+namespace YggdrAshill.Heimdallr.Inception
 {
     public interface ISource<TItem>
         where TItem : IItem

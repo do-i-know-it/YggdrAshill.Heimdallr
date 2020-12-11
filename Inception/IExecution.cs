@@ -1,4 +1,4 @@
-﻿namespace YggdrAshill.Heimdallr.Incepction
+﻿namespace YggdrAshill.Heimdallr.Inception
 {
     public interface IExecution
     {
