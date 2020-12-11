@@ -6,6 +6,20 @@ namespace YggdrAshill.Heimdallr.Specification
     [TestFixture(TestOf = typeof(Observation<>))]
     internal class ObservationSpecification
     {
+        private Indication<Item> indication;
+
+        [SetUp]
+        public void SetUp()
+        {
+            indication = new Indication<Item>();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            indication = default;
+        }
+
         [Test]
         public void ShouldExecuteFunctionWhenHasSubscribed()
         {
@@ -17,7 +31,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 return new Unsubscription();
             });
 
-            var unsubscription = observation.Subscribe(new Indication<Item>());
+            var unsubscription = observation.Subscribe(indication);
 
             Assert.IsTrue(expected);
 
@@ -36,7 +50,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 });
             });
 
-            var unsubscription = observation.Subscribe(new Indication<Item>());
+            var unsubscription = observation.Subscribe(indication);
 
             unsubscription.Unsubscribe();
 
