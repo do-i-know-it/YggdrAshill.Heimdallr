@@ -3,63 +3,38 @@ using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Inspection<TItem> :
-        IInspection<TItem>
-        where TItem : IItem
+    public sealed class Inspection :
+        IInspection
     {
-        private readonly IExecution execution;
-
-        private readonly IAnnouncement<TItem> announcement;
+        private readonly Action onInspected;
 
         #region Constructor
-
-        public Inspection(Func<TItem> onExecuted)
+        
+        public Inspection(Action onInspected)
         {
-            if (onExecuted == null)
+            if (onInspected == null)
             {
-                throw new ArgumentNullException(nameof(onExecuted));
+                throw new ArgumentNullException(nameof(onInspected));
             }
 
-            execution = new Execution(() =>
+            this.onInspected = onInspected;
+        }
+
+        public Inspection()
+        {
+            onInspected = () =>
             {
-                var executed = onExecuted.Invoke();
 
-                announcement.Indicate(executed);
-            });
-
-            announcement = new Announcement<TItem>();
+            };
         }
 
         #endregion
 
-        #region IObservation
+        #region IInspection
 
-        public IUnsubscription Subscribe(IIndication<TItem> indication)
+        public void Inspect()
         {
-            if (indication == null)
-            {
-                throw new ArgumentNullException(nameof(indication));
-            }
-
-            return announcement.Subscribe(indication);
-        }
-
-        #endregion
-
-        #region IUnsubscription
-
-        public void Unsubscribe()
-        {
-            announcement.Unsubscribe();
-        }
-
-        #endregion
-
-        #region IOrigination
-
-        public IExecution Originate()
-        {
-            return execution;
+            onInspected.Invoke();
         }
 
         #endregion
