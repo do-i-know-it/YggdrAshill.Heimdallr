@@ -2,13 +2,13 @@
 
 namespace YggdrAshill.Heimdallr.Explication
 {
-    internal sealed class Notator<TItem> :
+    internal sealed class Notate<TItem> :
         ITranslation<TItem, Note>
         where TItem : IItem
     {
         private readonly INotation<TItem> notation;
 
-        public Notator(INotation<TItem> notation)
+        public Notate(INotation<TItem> notation)
         {
             this.notation = notation;
         }

@@ -26,29 +26,7 @@ namespace YggdrAshill.Heimdallr.Explication
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return observation.Subscribe(new Translate(indication, translation));
-        }
-
-        private sealed class Translate :
-            IIndication<TInput>
-        {
-            private readonly IIndication<TOutput> indication;
-
-            private readonly ITranslation<TInput, TOutput> translation;
-
-            public Translate(IIndication<TOutput> indication, ITranslation<TInput, TOutput> translation)
-            {
-                this.indication = indication;
-
-                this.translation = translation;
-            }
-
-            public void Indicate(TInput item)
-            {
-                var translated = translation.Translate(item);
-
-                indication.Indicate(translated);
-            }
+            return observation.Subscribe(new Translate<TInput, TOutput>(indication, translation));
         }
     }
 }

@@ -6,6 +6,8 @@ namespace YggdrAshill.Heimdallr
 {
     public static class ExplicationExtension
     {
+        #region Translation
+
         public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, Func<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
@@ -22,6 +24,26 @@ namespace YggdrAshill.Heimdallr
             return observation.Translate(new Translation<TInput, TOutput>(translation));
         }
 
+        public static IIndication<TInput> Translated<TInput, TOutput>(this IIndication<TOutput> indication, Func<TInput, TOutput> translation)
+            where TInput : IItem
+            where TOutput : IItem
+        {
+            if (indication == null)
+            {
+                throw new ArgumentNullException(nameof(indication));
+            }
+            if (translation == null)
+            {
+                throw new ArgumentNullException(nameof(translation));
+            }
+
+            return indication.Translated(new Translation<TInput, TOutput>(translation));
+        }
+
+        #endregion
+
+        #region Notation
+
         public static IObservation<Note> Notate<TItem>(this IObservation<TItem> observation, Func<TItem, Note> notation)
             where TItem : IItem
         {
@@ -36,5 +58,22 @@ namespace YggdrAshill.Heimdallr
 
             return observation.Notate(new Notation<TItem>(notation));
         }
+
+        public static IIndication<TItem> Notated<TItem>(this IIndication<Note> indication, Func<TItem, Note> notation)
+            where TItem : IItem
+        {
+            if (indication == null)
+            {
+                throw new ArgumentNullException(nameof(indication));
+            }
+            if (notation == null)
+            {
+                throw new ArgumentNullException(nameof(notation));
+            }
+
+            return indication.Notated(new Notation<TItem>(notation));
+        }
+
+        #endregion
     }
 }
