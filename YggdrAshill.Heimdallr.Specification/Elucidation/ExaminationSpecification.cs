@@ -3,40 +3,40 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Origination))]
-    internal class OriginationSpecification
+    [TestFixture(TestOf = typeof(Examination))]
+    internal class ExaminationSpecification
     {
         [Test]
-        public void ShouldExecuteFunctionWhenHasOriginated()
+        public void ShouldExecuteFunctionWhenHasExamined()
         {
             var expected = false;
-            var origination = new Origination(() =>
+            var examination = new Examination(() =>
             {
                 expected = true;
 
-                return new Execution();
+                return new Inspection();
             });
 
-            var execution = origination.Originate();
+            var inspection = examination.Examine();
 
             Assert.IsTrue(expected);
         }
 
         [Test]
-        public void ShouldExecuteAfterHasOriginated()
+        public void ShouldExecuteAfterHasExamined()
         {
             var expected = false;
-            var origination = new Origination(() =>
+            var examination = new Examination(() =>
             {
-                return new Execution(() =>
+                return new Inspection(() =>
                 {
                     expected = true;
                 });
             });
 
-            var execution = origination.Originate();
+            var inspection = examination.Examine();
 
-            execution.Execute();
+            inspection.Inspect();
 
             Assert.IsTrue(expected);
         }
@@ -46,7 +46,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var origination = new Origination(null);
+                var examination = new Examination(null);
             });
         }
     }
