@@ -1,12 +1,11 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
-using YggdrAshill.Heimdallr.Explication;
 using System;
 
-namespace YggdrAshill.Heimdallr
+namespace YggdrAshill.Heimdallr.Explication
 {
     public static class ExplicationExtension
     {
-        public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, Func<TInput, TOutput> translation)
+        public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, ITranslation<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
         {
@@ -19,10 +18,10 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(translation));
             }
 
-            return observation.Translate(new Translation<TInput, TOutput>(translation));
+            return new Translator<TInput, TOutput>(observation, translation);
         }
 
-        public static IObservation<Note> Notate<TItem>(this IObservation<TItem> observation, Func<TItem, Note> notation)
+        public static IObservation<Note> Notate<TItem>(this IObservation<TItem> observation, INotation<TItem> notation)
             where TItem : IItem
         {
             if (observation == null)
@@ -34,7 +33,7 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return observation.Notate(new Notation<TItem>(notation));
+            return observation.Translate(new Notator<TItem>(notation));
         }
     }
 }
