@@ -74,5 +74,39 @@ namespace YggdrAshill.Heimdallr.Explication
         }
 
         #endregion
+
+        #region Notification
+
+        public static IObservation<Notice> Notify<TItem>(this IObservation<TItem> observation, INotification<TItem> notification)
+            where TItem : IItem
+        {
+            if (observation == null)
+            {
+                throw new ArgumentNullException(nameof(observation));
+            }
+            if (notification == null)
+            {
+                throw new ArgumentNullException(nameof(notification));
+            }
+
+            return new Notifier<TItem>(observation, notification);
+        }
+
+        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, INotification<TItem> notification)
+            where TItem : IItem
+        {
+            if (indication == null)
+            {
+                throw new ArgumentNullException(nameof(indication));
+            }
+            if (notification == null)
+            {
+                throw new ArgumentNullException(nameof(notification));
+            }
+
+            return new Notify<TItem>(indication, notification);
+        }
+
+        #endregion
     }
 }
