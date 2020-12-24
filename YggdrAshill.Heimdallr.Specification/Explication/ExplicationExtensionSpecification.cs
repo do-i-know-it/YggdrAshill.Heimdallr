@@ -8,7 +8,8 @@ namespace YggdrAshill.Heimdallr.Specification
     [TestFixture(TestOf = typeof(ExplicationExtension))]
     internal class ExplicationExtensionSpecification :
         ITranslation<InputItem, OutputItem>,
-        INotation<Item>
+        INotation<Item>,
+        INotification<Item>
     {
         public Note Notate(Item item)
         {
@@ -30,8 +31,20 @@ namespace YggdrAshill.Heimdallr.Specification
             return new OutputItem();
         }
 
+        private bool expected;
+
+        public bool Notify(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            return expected;
+        }
+
         [Test]
-        public void ShouldTranslateItemWhenIndicated()
+        public void ShouldTranslateItemWhenHasIndicated()
         {
             var announcement = new Announcement<InputItem>();
             var translator = announcement.Translate(this);
@@ -57,7 +70,7 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldNotateItemWhenIndicated()
+        public void ShouldNotateItemWhenHasIndicated()
         {
             var announcement = new Announcement<Item>();
             var notator = announcement.Notate(this);
@@ -78,6 +91,35 @@ namespace YggdrAshill.Heimdallr.Specification
             announcement.Indicate(new Item());
 
             Assert.IsTrue(expected);
+
+            unsubscription.Unsubscribe();
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldNotifyItemWhenHasIndicated(bool expected)
+        {
+            this.expected = expected;
+
+            var announcement = new Announcement<Item>();
+            var notifier = announcement.Notify(this);
+
+            var received = false;
+            var indication = new Indication<Notice>(item =>
+            {
+                if (item == null)
+                {
+                    throw new ArgumentNullException(nameof(item));
+                }
+
+                received = true;
+            });
+
+            var unsubscription = notifier.Subscribe(indication);
+
+            announcement.Indicate(new Item());
+
+            Assert.AreEqual(expected, received);
 
             unsubscription.Unsubscribe();
         }
@@ -147,6 +189,40 @@ namespace YggdrAshill.Heimdallr.Specification
             Assert.Throws<ArgumentNullException>(() =>
             {
                 var unsubscription = notator.Subscribe(null);
+            });
+        }
+
+        [Test]
+        public void NullObservationCannotNotify()
+        {
+            var observation = default(IObservation<Item>);
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var notifier = observation.Notify(this);
+            });
+        }
+
+        [Test]
+        public void CannotNotifyNull()
+        {
+            var announcement = new Announcement<Item>();
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var notifier = announcement.Notify(null);
+            });
+        }
+
+        [Test]
+        public void NotifierCannotSubscribeNull()
+        {
+            var announcement = new Announcement<Item>();
+            var notifier = announcement.Notify(this);
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var unsubscription = notifier.Subscribe(null);
             });
         }
     }

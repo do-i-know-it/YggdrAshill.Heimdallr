@@ -108,6 +108,28 @@ namespace YggdrAshill.Heimdallr
             return indication.Notified(new Notification<TItem>(notification));
         }
 
+        public static IUnsubscription Subscribe(this IObservation<Notice> observation, Action onIndicated)
+        {
+            if (observation == null)
+            {
+                throw new ArgumentNullException(nameof(observation));
+            }
+            if (onIndicated == null)
+            {
+                throw new ArgumentNullException(nameof(onIndicated));
+            }
+
+            return observation.Subscribe(item =>
+            {
+                if (item == null)
+                {
+                    throw new ArgumentNullException(nameof(item));
+                }
+
+                onIndicated.Invoke();
+            });
+        }
+
         #endregion
     }
 }
