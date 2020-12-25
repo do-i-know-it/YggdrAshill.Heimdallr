@@ -18,7 +18,7 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(logger));
             }
 
-            if (!loggerList.Contains(logger))
+            if (loggerList.Contains(logger))
             {
                 return;
             }
