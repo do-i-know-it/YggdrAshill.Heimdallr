@@ -1,4 +1,5 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
+using YggdrAshill.Heimdallr.Explication;
 using System;
 using System.Threading;
 using System.Runtime.CompilerServices;
@@ -77,6 +78,26 @@ namespace YggdrAshill.Heimdallr.Historization
             logger.Log(severity, message, stackTrace, filePath, lineNumber, memberName);
         }
 
+        public static void Log<TItem>(this ILogger logger, SeverityLevel severity, TItem item, INotation<TItem> notation,
+            [CallerFilePath] string filePath = "",
+            [CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string memberName = "")
+            where TItem : IItem
+        {
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+            if (notation == null)
+            {
+                throw new ArgumentNullException(nameof(notation));
+            }
+
+            var note = notation.Notate(item);
+
+            logger.Log(severity, note.Content, filePath, lineNumber, memberName);
+        }
+
         public static void Indicate(this IIndication<Log> indication, SeverityLevel severity, string message, string stackTrace,
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0,
@@ -101,6 +122,20 @@ namespace YggdrAshill.Heimdallr.Historization
             var information = new Log(severity, dateTime, message, stackTrace, thread, filePath, lineNumber, memberName);
 
             indication.Indicate(information);
+        }
+
+        public static ILogger ToLogger(this IIndication<Note> indication, INotation<Log> notation)
+        {
+            if (indication == null)
+            {
+                throw new ArgumentNullException(nameof(indication));
+            }
+            if (notation == null)
+            {
+                throw new ArgumentNullException(nameof(notation));
+            }
+
+            return indication.Notated(notation).ToLogger();
         }
 
         public static ILogger ToLogger(this IIndication<Log> indication)
