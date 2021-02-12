@@ -3,14 +3,14 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Notification<>))]
-    internal class NotificationSpecification
+    [TestFixture(TestOf = typeof(Condition<>))]
+    internal class ConditionSpecification
     {
         [Test]
-        public void ShouldExecuteFunctionWhenHasNotified()
+        public void ShouldExecuteFunctionWhenHasCheckedCondition()
         {
             var expected = false;
-            var notification = new Notification<Item>(item =>
+            var condition = new Condition<Item>(item =>
             {
                 if (item == null)
                 {
@@ -20,7 +20,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 return expected = true;
             });
 
-            notification.Notify(new Item());
+            condition.IsSatisfied(new Item());
 
             Assert.IsTrue(expected);
         }
@@ -30,7 +30,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notification = new Notification<Item>(null);
+                var condition = new Condition<Item>(null);
             });
         }
     }

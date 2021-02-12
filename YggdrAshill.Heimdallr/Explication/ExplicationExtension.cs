@@ -78,34 +78,34 @@ namespace YggdrAshill.Heimdallr
 
         #region INotification
 
-        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, Func<TItem, bool> notification)
+        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, Func<TItem, bool> condition)
             where TItem : IItem
         {
             if (subscription == null)
             {
                 throw new ArgumentNullException(nameof(subscription));
             }
-            if (notification == null)
+            if (condition == null)
             {
-                throw new ArgumentNullException(nameof(notification));
+                throw new ArgumentNullException(nameof(condition));
             }
 
-            return subscription.Notify(new Notification<TItem>(notification));
+            return subscription.Notify(new Condition<TItem>(condition));
         }
 
-        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, Func<TItem, bool> notification)
+        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, Func<TItem, bool> condition)
             where TItem : IItem
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
-            if (notification == null)
+            if (condition == null)
             {
-                throw new ArgumentNullException(nameof(notification));
+                throw new ArgumentNullException(nameof(condition));
             }
 
-            return indication.Notified(new Notification<TItem>(notification));
+            return indication.Notified(new Condition<TItem>(condition));
         }
 
         public static IUnsubscription Subscribe(this ISubscription<Notice> subscription, Action onIndicated)

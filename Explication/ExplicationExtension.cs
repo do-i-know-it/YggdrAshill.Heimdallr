@@ -77,34 +77,34 @@ namespace YggdrAshill.Heimdallr.Explication
 
         #region Notification
 
-        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, INotification<TItem> notification)
+        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, ICondition<TItem> condition)
             where TItem : IItem
         {
             if (subscription == null)
             {
                 throw new ArgumentNullException(nameof(subscription));
             }
-            if (notification == null)
+            if (condition == null)
             {
-                throw new ArgumentNullException(nameof(notification));
+                throw new ArgumentNullException(nameof(condition));
             }
 
-            return new Notifier<TItem>(subscription, notification);
+            return new Notifier<TItem>(subscription, condition);
         }
 
-        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, INotification<TItem> notification)
+        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, ICondition<TItem> condition)
             where TItem : IItem
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
-            if (notification == null)
+            if (condition == null)
             {
-                throw new ArgumentNullException(nameof(notification));
+                throw new ArgumentNullException(nameof(condition));
             }
 
-            return new Notify<TItem>(indication, notification);
+            return new Notify<TItem>(indication, condition);
         }
 
         #endregion

@@ -9,7 +9,7 @@ namespace YggdrAshill.Heimdallr.Specification
     internal class ExplicationExtensionSpecification :
         ITranslation<InputItem, OutputItem>,
         INotation<Item>,
-        INotification<Item>
+        ICondition<Item>
     {
         #region ITranslation
 
@@ -43,7 +43,7 @@ namespace YggdrAshill.Heimdallr.Specification
 
         private bool expected;
 
-        public bool Notify(Item item)
+        public bool IsSatisfied(Item item)
         {
             if (item == null)
             {

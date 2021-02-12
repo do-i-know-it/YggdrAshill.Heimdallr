@@ -9,13 +9,13 @@ namespace YggdrAshill.Heimdallr.Explication
     {
         private readonly ISubscription<TItem> subscription;
 
-        private readonly INotification<TItem> notification;
+        private readonly ICondition<TItem> condition;
 
-        internal Notifier(ISubscription<TItem> subscription, INotification<TItem> notification)
+        internal Notifier(ISubscription<TItem> subscription, ICondition<TItem> condition)
         {
             this.subscription = subscription;
 
-            this.notification = notification;
+            this.condition = condition;
         }
 
         public IUnsubscription Subscribe(IIndication<Notice> indication)
@@ -25,7 +25,7 @@ namespace YggdrAshill.Heimdallr.Explication
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return subscription.Subscribe(new Notify<TItem>(indication, notification));
+            return subscription.Subscribe(new Notify<TItem>(indication, condition));
         }
     }
 }
