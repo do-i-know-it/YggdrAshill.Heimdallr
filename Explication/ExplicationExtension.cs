@@ -23,7 +23,7 @@ namespace YggdrAshill.Heimdallr.Explication
             return new Translator<TInput, TOutput>(subscription, translation);
         }
 
-        public static IIndication<TInput> Translated<TInput, TOutput>(this IIndication<TOutput> indication, ITranslation<TInput, TOutput> translation)
+        public static IIndication<TInput> Translate<TInput, TOutput>(this IIndication<TOutput> indication, ITranslation<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
         {
@@ -58,7 +58,7 @@ namespace YggdrAshill.Heimdallr.Explication
             return subscription.Translate(new Notate<TItem>(notation));
         }
 
-        public static IIndication<TItem> Notated<TItem>(this IIndication<Note> indication, INotation<TItem> notation)
+        public static IIndication<TItem> Notate<TItem>(this IIndication<Note> indication, INotation<TItem> notation)
             where TItem : IItem
         {
             if (indication == null)
@@ -70,7 +70,7 @@ namespace YggdrAshill.Heimdallr.Explication
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return indication.Translated(new Notate<TItem>(notation));
+            return indication.Translate(new Notate<TItem>(notation));
         }
 
         #endregion
@@ -92,7 +92,7 @@ namespace YggdrAshill.Heimdallr.Explication
             return new Notifier<TItem>(subscription, condition);
         }
 
-        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, ICondition<TItem> condition)
+        public static IIndication<TItem> Notify<TItem>(this IIndication<Notice> indication, ICondition<TItem> condition)
             where TItem : IItem
         {
             if (indication == null)

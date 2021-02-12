@@ -24,7 +24,7 @@ namespace YggdrAshill.Heimdallr
             return subscription.Translate(new Translation<TInput, TOutput>(translation));
         }
 
-        public static IIndication<TInput> Translated<TInput, TOutput>(this IIndication<TOutput> indication, Func<TInput, TOutput> translation)
+        public static IIndication<TInput> Translate<TInput, TOutput>(this IIndication<TOutput> indication, Func<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
         {
@@ -37,7 +37,7 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(translation));
             }
 
-            return indication.Translated(new Translation<TInput, TOutput>(translation));
+            return indication.Translate(new Translation<TInput, TOutput>(translation));
         }
 
         #endregion
@@ -59,7 +59,7 @@ namespace YggdrAshill.Heimdallr
             return subscription.Notate(new Notation<TItem>(notation));
         }
 
-        public static IIndication<TItem> Notated<TItem>(this IIndication<Note> indication, Func<TItem, Note> notation)
+        public static IIndication<TItem> Notate<TItem>(this IIndication<Note> indication, Func<TItem, Note> notation)
             where TItem : IItem
         {
             if (indication == null)
@@ -71,7 +71,7 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return indication.Notated(new Notation<TItem>(notation));
+            return indication.Notate(new Notation<TItem>(notation));
         }
 
         #endregion
@@ -93,7 +93,7 @@ namespace YggdrAshill.Heimdallr
             return subscription.Notify(new Condition<TItem>(condition));
         }
 
-        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, Func<TItem, bool> condition)
+        public static IIndication<TItem> Notify<TItem>(this IIndication<Notice> indication, Func<TItem, bool> condition)
             where TItem : IItem
         {
             if (indication == null)
@@ -105,7 +105,7 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(condition));
             }
 
-            return indication.Notified(new Condition<TItem>(condition));
+            return indication.Notify(new Condition<TItem>(condition));
         }
 
         public static IUnsubscription Subscribe(this ISubscription<Notice> subscription, Action onIndicated)

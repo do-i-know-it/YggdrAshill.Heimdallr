@@ -135,7 +135,7 @@ namespace YggdrAshill.Heimdallr.Historization
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return indication.Notated(notation).ToLogger();
+            return indication.Notate(notation).ToLogger();
         }
 
         public static ILogger ToLogger(this IIndication<Log> indication)
