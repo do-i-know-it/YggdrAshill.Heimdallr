@@ -1,28 +1,28 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Assessment<>))]
-    internal class AssessmentSpecification
+    [TestFixture(TestOf = typeof(Publication<>))]
+    internal class PublicationSpecification
     {
-        private Assessment<Item> assessment;
+        private Publication<Item> publication;
 
         [SetUp]
         public void SetUp()
         {
-            assessment = new Assessment<Item>(() => new Item());
+            publication = new Publication<Item>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            assessment.Unsubscribe();
-            assessment = default;
+            publication.Unsubscribe();
+            publication = null;
         }
 
         [Test]
-        public void ShouldSendItemToSubscribedAfterHasExamined()
+        public void ShouldSendItemToSubscribedWhenHasIndicated()
         {
             var expected = false;
             var indication = new Indication<Item>(item =>
@@ -35,11 +35,9 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var unsubscription = assessment.Subscribe(indication);
+            var unsubscription = publication.Subscribe(indication);
 
-            var inspection = assessment.Examine();
-
-            inspection.Inspect();
+            publication.Indicate(new Item());
 
             Assert.IsTrue(expected);
 
@@ -47,7 +45,7 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldNotSendItemToUnsubscribedAfterHasExamined()
+        public void ShouldNotSendItemToUnsubscribedWhenHasIndicated()
         {
             var expected = false;
             var indication = new Indication<Item>(item =>
@@ -60,13 +58,11 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var unsubscription = assessment.Subscribe(indication);
-
-            var inspection = assessment.Examine();
+            var unsubscription = publication.Subscribe(indication);
 
             unsubscription.Unsubscribe();
 
-            inspection.Inspect();
+            publication.Indicate(new Item());
 
             Assert.IsFalse(expected);
         }
@@ -85,24 +81,13 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            assessment.Subscribe(indication);
+            var unsubscription = publication.Subscribe(indication);
 
-            var inspection = assessment.Examine();
+            publication.Unsubscribe();
 
-            assessment.Unsubscribe();
-
-            inspection.Inspect();
+            publication.Indicate(new Item());
 
             Assert.IsFalse(expected);
-        }
-
-        [Test]
-        public void CannotBeGeneratedWithNull()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var assessment = new Assessment<Item>(null);
-            });
         }
 
         [Test]
@@ -110,7 +95,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var unsubscription = assessment.Subscribe(null);
+                var unsubscription = publication.Subscribe(null);
             });
         }
     }

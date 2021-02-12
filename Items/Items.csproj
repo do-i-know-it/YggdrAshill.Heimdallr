@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>YggdrAshill.Heimdallr.Items</AssemblyName>
+    <RootNamespace>YggdrAshill.Heimdallr.Items</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Elucidation\Elucidation.csproj" />
-    <ProjectReference Include="..\Explication\Explication.csproj" />
-    <ProjectReference Include="..\Historization\Historization.csproj" />
-    <ProjectReference Include="..\Items\Items.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,18 +8,18 @@ namespace YggdrAshill.Heimdallr.Explication
     {
         private readonly IIndication<Notice> indication;
 
-        private readonly INotification<TItem> notification;
+        private readonly ICondition<TItem> condition;
 
-        internal Notify(IIndication<Notice> indication, INotification<TItem> notification)
+        internal Notify(IIndication<Notice> indication, ICondition<TItem> condition)
         {
             this.indication = indication;
 
-            this.notification = notification;
+            this.condition = condition;
         }
 
         public void Indicate(TItem item)
         {
-            if (!notification.Notify(item))
+            if (!condition.IsSatisfied(item))
             {
                 return;
             }

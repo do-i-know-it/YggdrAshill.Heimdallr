@@ -2,9 +2,9 @@
 
 namespace YggdrAshill.Heimdallr.Explication
 {
-    public interface INotification<TItem>
+    public interface ICondition<TItem>
         where TItem : IItem
     {
-        bool Notify(TItem item);
+        bool IsSatisfied(TItem item);
     }
 }

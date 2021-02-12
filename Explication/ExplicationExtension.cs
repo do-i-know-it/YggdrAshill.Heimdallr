@@ -7,23 +7,23 @@ namespace YggdrAshill.Heimdallr.Explication
     {
         #region Translation
 
-        public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, ITranslation<TInput, TOutput> translation)
+        public static ISubscription<TOutput> Translate<TInput, TOutput>(this ISubscription<TInput> subscription, ITranslation<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (translation == null)
             {
                 throw new ArgumentNullException(nameof(translation));
             }
 
-            return new Translator<TInput, TOutput>(observation, translation);
+            return new Translator<TInput, TOutput>(subscription, translation);
         }
 
-        public static IIndication<TInput> Translated<TInput, TOutput>(this IIndication<TOutput> indication, ITranslation<TInput, TOutput> translation)
+        public static IIndication<TInput> Translate<TInput, TOutput>(this IIndication<TOutput> indication, ITranslation<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
         {
@@ -43,22 +43,22 @@ namespace YggdrAshill.Heimdallr.Explication
 
         #region Notation
 
-        public static IObservation<Note> Notate<TItem>(this IObservation<TItem> observation, INotation<TItem> notation)
+        public static ISubscription<Note> Notate<TItem>(this ISubscription<TItem> subscription, INotation<TItem> notation)
             where TItem : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (notation == null)
             {
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return observation.Translate(new Notate<TItem>(notation));
+            return subscription.Translate(new Notate<TItem>(notation));
         }
 
-        public static IIndication<TItem> Notated<TItem>(this IIndication<Note> indication, INotation<TItem> notation)
+        public static IIndication<TItem> Notate<TItem>(this IIndication<Note> indication, INotation<TItem> notation)
             where TItem : IItem
         {
             if (indication == null)
@@ -70,41 +70,41 @@ namespace YggdrAshill.Heimdallr.Explication
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return indication.Translated(new Notate<TItem>(notation));
+            return indication.Translate(new Notate<TItem>(notation));
         }
 
         #endregion
 
         #region Notification
 
-        public static IObservation<Notice> Notify<TItem>(this IObservation<TItem> observation, INotification<TItem> notification)
+        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, ICondition<TItem> condition)
             where TItem : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
-            if (notification == null)
+            if (condition == null)
             {
-                throw new ArgumentNullException(nameof(notification));
+                throw new ArgumentNullException(nameof(condition));
             }
 
-            return new Notifier<TItem>(observation, notification);
+            return new Notifier<TItem>(subscription, condition);
         }
 
-        public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, INotification<TItem> notification)
+        public static IIndication<TItem> Notify<TItem>(this IIndication<Notice> indication, ICondition<TItem> condition)
             where TItem : IItem
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
-            if (notification == null)
+            if (condition == null)
             {
-                throw new ArgumentNullException(nameof(notification));
+                throw new ArgumentNullException(nameof(condition));
             }
 
-            return new Notify<TItem>(indication, notification);
+            return new Notify<TItem>(indication, condition);
         }
 
         #endregion

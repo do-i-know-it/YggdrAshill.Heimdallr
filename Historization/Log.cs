@@ -22,7 +22,7 @@ namespace YggdrAshill.Heimdallr.Historization
 
         public string MemberName { get; }
 
-        public Log(SeverityLevel severity, DateTime dateTime, string message, string stackTrace, int thread, string filePath, int lineNumber, string memberName)
+        internal Log(SeverityLevel severity, DateTime dateTime, string message, string stackTrace, int thread, string filePath, int lineNumber, string memberName)
         {
             Severity = severity;
 

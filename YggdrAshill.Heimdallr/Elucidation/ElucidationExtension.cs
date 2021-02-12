@@ -5,12 +5,12 @@ namespace YggdrAshill.Heimdallr
 {
     public static class ElucidationExtension
     {
-        public static IUnsubscription Subscribe<TItem>(this IObservation<TItem> observation, Action<TItem> onIndicated)
+        public static IUnsubscription Subscribe<TItem>(this ISubscription<TItem> subscription, Action<TItem> onIndicated)
             where TItem : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (onIndicated == null)
             {
@@ -19,7 +19,7 @@ namespace YggdrAshill.Heimdallr
 
             var indication = new Indication<TItem>(onIndicated);
 
-            return observation.Subscribe(indication);
+            return subscription.Subscribe(indication);
         }
     }
 }

@@ -4,25 +4,25 @@ using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Notification<TItem> :
-        INotification<TItem>
+    public sealed class Condition<TItem> :
+        ICondition<TItem>
         where TItem : IItem
     {
-        public static INotification<TItem> All { get; }
-            = new Notification<TItem>(_ =>
+        public static ICondition<TItem> All { get; }
+            = new Condition<TItem>(_ =>
             {
                 return true;
             });
 
-        public static INotification<TItem> None { get; }
-            = new Notification<TItem>(_ =>
+        public static ICondition<TItem> None { get; }
+            = new Condition<TItem>(_ =>
             {
                 return false;
             });
 
         private readonly Func<TItem, bool> onNotified;
 
-        public Notification(Func<TItem, bool> onNotified)
+        public Condition(Func<TItem, bool> onNotified)
         {
             if (onNotified == null)
             {
@@ -32,7 +32,7 @@ namespace YggdrAshill.Heimdallr
             this.onNotified = onNotified;
         }
 
-        public bool Notify(TItem item)
+        public bool IsSatisfied(TItem item)
         {
             return onNotified.Invoke(item);
         }

@@ -21,38 +21,36 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldExecuteFunctionWhenHasSubscribed()
+        public void ShouldExecuteFunctionWhenHasObserved()
         {
             var expected = false;
             var observation = new Observation<Item>(_ =>
             {
                 expected = true;
 
-                return new Unsubscription();
+                return new Inspection();
             });
 
-            var unsubscription = observation.Subscribe(indication);
+            var inspection = observation.Observe(indication);
 
             Assert.IsTrue(expected);
-
-            unsubscription.Unsubscribe();
         }
 
         [Test]
-        public void ShouldUnsubscribeAfterHasSubscribed()
+        public void ShouldInspectAfterHasObserved()
         {
             var expected = false;
             var observation = new Observation<Item>(_ =>
             {
-                return new Unsubscription(() =>
+                return new Inspection(() =>
                 {
                     expected = true;
                 });
             });
 
-            var unsubscription = observation.Subscribe(indication);
+            var inspection = observation.Observe(indication);
 
-            unsubscription.Unsubscribe();
+            inspection.Inspect();
 
             Assert.IsTrue(expected);
         }
@@ -67,13 +65,13 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void CannotSubscribeNull()
+        public void CannotObserveNull()
         {
             var observation = new Observation<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var unsubscription = observation.Subscribe(null);
+                var inspection = observation.Observe(null);
             });
         }
     }
