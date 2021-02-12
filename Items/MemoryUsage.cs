@@ -1,7 +1,7 @@
 ﻿using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
-namespace YggdrAshill.Heimdallr
+namespace YggdrAshill.Heimdallr.Items
 {
     public struct MemoryUsage :
         IItem,
