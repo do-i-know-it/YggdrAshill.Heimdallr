@@ -3,6 +3,6 @@
     public interface IObservation<TItem>
         where TItem : IItem
     {
-        IUnsubscription Subscribe(IIndication<TItem> indication);
+        IInspection Observe(IIndication<TItem> indication);
     }
 }

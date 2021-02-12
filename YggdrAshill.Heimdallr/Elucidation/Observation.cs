@@ -7,25 +7,25 @@ namespace YggdrAshill.Heimdallr
         IObservation<TItem>
         where TItem : IItem
     {
-        private readonly Func<IIndication<TItem>, IUnsubscription> onSubscribed;
+        private readonly Func<IIndication<TItem>, IInspection> onObserved;
 
         #region Constructor
 
-        public Observation(Func<IIndication<TItem>, IUnsubscription> onSubscribed)
+        public Observation(Func<IIndication<TItem>, IInspection> onObserved)
         {
-            if (onSubscribed == null)
+            if (onObserved == null)
             {
-                throw new ArgumentNullException(nameof(onSubscribed));
+                throw new ArgumentNullException(nameof(onObserved));
             }
 
-            this.onSubscribed = onSubscribed;
+            this.onObserved = onObserved;
         }
 
         public Observation()
         {
-            onSubscribed = (_) =>
+            onObserved = (_) =>
             {
-                return new Unsubscription();
+                return new Inspection();
             };
         }
 
@@ -33,14 +33,14 @@ namespace YggdrAshill.Heimdallr
 
         #region IObservation
 
-        public IUnsubscription Subscribe(IIndication<TItem> indication)
+        public IInspection Observe(IIndication<TItem> indication)
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return onSubscribed.Invoke(indication);
+            return onObserved.Invoke(indication);
         }
 
         #endregion

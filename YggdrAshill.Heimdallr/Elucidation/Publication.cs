@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Announcement<TItem> :
-        IAnnouncement<TItem>
+    public sealed class Publication<TItem> :
+        IPublication<TItem>
         where TItem : IItem
     {
         private readonly List<IIndication<TItem>> indicationList

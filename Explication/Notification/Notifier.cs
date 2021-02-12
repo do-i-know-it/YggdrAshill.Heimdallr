@@ -4,16 +4,16 @@ using System;
 namespace YggdrAshill.Heimdallr.Explication
 {
     internal sealed class Notifier<TItem> :
-        IObservation<Notice>
+        ISubscription<Notice>
         where TItem : IItem
     {
-        private readonly IObservation<TItem> observation;
+        private readonly ISubscription<TItem> subscription;
 
         private readonly INotification<TItem> notification;
 
-        internal Notifier(IObservation<TItem> observation, INotification<TItem> notification)
+        internal Notifier(ISubscription<TItem> subscription, INotification<TItem> notification)
         {
-            this.observation = observation;
+            this.subscription = subscription;
 
             this.notification = notification;
         }
@@ -25,7 +25,7 @@ namespace YggdrAshill.Heimdallr.Explication
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return observation.Subscribe(new Notify<TItem>(indication, notification));
+            return subscription.Subscribe(new Notify<TItem>(indication, notification));
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace YggdrAshill.Heimdallr.Elucidation
 {
-    public interface IAnnouncement<TItem> :
+    public interface IPublication<TItem> :
         IIndication<TItem>,
-        IObservation<TItem>,
+        ISubscription<TItem>,
         IUnsubscription
         where TItem : IItem
     {

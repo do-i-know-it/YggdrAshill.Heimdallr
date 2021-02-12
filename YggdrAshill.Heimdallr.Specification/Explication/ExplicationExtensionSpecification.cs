@@ -11,15 +11,7 @@ namespace YggdrAshill.Heimdallr.Specification
         INotation<Item>,
         INotification<Item>
     {
-        public Note Notate(Item item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            return new Note("");
-        }
+        #region ITranslation
 
         public OutputItem Translate(InputItem item)
         {
@@ -30,6 +22,24 @@ namespace YggdrAshill.Heimdallr.Specification
 
             return new OutputItem();
         }
+
+        #endregion
+
+        #region INotation
+
+        public Note Notate(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            return new Note("");
+        }
+
+        #endregion
+
+        #region INotification
 
         private bool expected;
 
@@ -43,11 +53,13 @@ namespace YggdrAshill.Heimdallr.Specification
             return expected;
         }
 
+        #endregion
+
         [Test]
-        public void ShouldTranslateItemWhenHasIndicated()
+        public void ShouldTranslateItem()
         {
-            var announcement = new Announcement<InputItem>();
-            var translator = announcement.Translate(this);
+            var publication = new Publication<InputItem>();
+            var translation = publication.Translate(this);
 
             var expected = false;
             var indication = new Indication<OutputItem>(item =>
@@ -60,9 +72,9 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var unsubscription = translator.Subscribe(indication);
+            var unsubscription = translation.Subscribe(indication);
 
-            announcement.Indicate(new InputItem());
+            publication.Indicate(new InputItem());
 
             Assert.IsTrue(expected);
 
@@ -70,10 +82,10 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldNotateItemWhenHasIndicated()
+        public void ShouldNotateItem()
         {
-            var announcement = new Announcement<Item>();
-            var notator = announcement.Notate(this);
+            var publication = new Publication<Item>();
+            var notation = publication.Notate(this);
 
             var expected = false;
             var indication = new Indication<Note>(item =>
@@ -86,9 +98,9 @@ namespace YggdrAshill.Heimdallr.Specification
                 expected = true;
             });
 
-            var unsubscription = notator.Subscribe(indication);
+            var unsubscription = notation.Subscribe(indication);
 
-            announcement.Indicate(new Item());
+            publication.Indicate(new Item());
 
             Assert.IsTrue(expected);
 
@@ -97,14 +109,14 @@ namespace YggdrAshill.Heimdallr.Specification
 
         [TestCase(true)]
         [TestCase(false)]
-        public void ShouldNotifyItemWhenHasIndicated(bool expected)
+        public void ShouldNotifyItem(bool expected)
         {
             this.expected = expected;
 
-            var announcement = new Announcement<Item>();
-            var notifier = announcement.Notify(this);
+            var publication = new Publication<Item>();
+            var notification = publication.Notify(this);
 
-            var received = false;
+            var notified = false;
             var indication = new Indication<Notice>(item =>
             {
                 if (item == null)
@@ -112,117 +124,81 @@ namespace YggdrAshill.Heimdallr.Specification
                     throw new ArgumentNullException(nameof(item));
                 }
 
-                received = true;
+                notified = true;
             });
 
-            var unsubscription = notifier.Subscribe(indication);
+            var unsubscription = notification.Subscribe(indication);
 
-            announcement.Indicate(new Item());
+            publication.Indicate(new Item());
 
-            Assert.AreEqual(expected, received);
+            Assert.AreEqual(expected, notified);
 
             unsubscription.Unsubscribe();
         }
 
         [Test]
-        public void NullObservationCannotTranslate()
+        public void CannotTranslateWithNullSubscription()
         {
-            var observation = default(IObservation<InputItem>);
+            var subscription = default(ISubscription<InputItem>);
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notator = observation.Translate(this);
+                var notation = subscription.Translate(this);
             });
         }
 
         [Test]
-        public void CannotTranslateNull()
+        public void CannotTranslateWithNullTranslation()
         {
-            var announcement = new Announcement<InputItem>();
+            var publication = new Publication<InputItem>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translator = announcement.Translate((ITranslation<InputItem, OutputItem>)null);
+                var translation = publication.Translate((ITranslation<InputItem, OutputItem>)null);
             });
         }
 
         [Test]
-        public void TranslatorCannotSubscribeNull()
+        public void CannotNotateWithNullSubscription()
         {
-            var announcement = new Announcement<InputItem>();
-            var translator = announcement.Translate(this);
+            var subscription = default(ISubscription<Item>);
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var unsubscription = translator.Subscribe(null);
+                var notation = subscription.Notate(this);
             });
         }
 
         [Test]
-        public void NullObservationCannotNotate()
+        public void CannotNotateWithNullNotation()
         {
-            var observation = default(IObservation<Item>);
+            var publication = new Publication<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notator = observation.Notate(this);
+                var notation = publication.Notate((INotation<Item>)null);
             });
         }
 
         [Test]
-        public void CannotNotateNull()
+        public void CannotNotifyWithNullSubscription()
         {
-            var announcement = new Announcement<Item>();
+            var subscription = default(ISubscription<Item>);
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notator = announcement.Notate(null);
+                var notification = subscription.Notify(this);
             });
         }
 
         [Test]
-        public void NotatorCannotSubscribeNull()
+        public void CannotNotifyWithNullNotification()
         {
-            var announcement = new Announcement<Item>();
-            var notator = announcement.Notate(this);
+            var publication = new Publication<Item>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var unsubscription = notator.Subscribe(null);
-            });
-        }
-
-        [Test]
-        public void NullObservationCannotNotify()
-        {
-            var observation = default(IObservation<Item>);
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var notifier = observation.Notify(this);
-            });
-        }
-
-        [Test]
-        public void CannotNotifyNull()
-        {
-            var announcement = new Announcement<Item>();
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var notifier = announcement.Notify(null);
-            });
-        }
-
-        [Test]
-        public void NotifierCannotSubscribeNull()
-        {
-            var announcement = new Announcement<Item>();
-            var notifier = announcement.Notify(this);
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var unsubscription = notifier.Subscribe(null);
+                var notification = publication.Notify(null);
             });
         }
     }

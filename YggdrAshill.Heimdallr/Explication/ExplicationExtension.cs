@@ -8,20 +8,20 @@ namespace YggdrAshill.Heimdallr
     {
         #region Translation
 
-        public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, Func<TInput, TOutput> translation)
+        public static ISubscription<TOutput> Translate<TInput, TOutput>(this ISubscription<TInput> subscription, Func<TInput, TOutput> translation)
             where TInput : IItem
             where TOutput : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (translation == null)
             {
                 throw new ArgumentNullException(nameof(translation));
             }
 
-            return observation.Translate(new Translation<TInput, TOutput>(translation));
+            return subscription.Translate(new Translation<TInput, TOutput>(translation));
         }
 
         public static IIndication<TInput> Translated<TInput, TOutput>(this IIndication<TOutput> indication, Func<TInput, TOutput> translation)
@@ -44,19 +44,19 @@ namespace YggdrAshill.Heimdallr
 
         #region Notation
 
-        public static IObservation<Note> Notate<TItem>(this IObservation<TItem> observation, Func<TItem, Note> notation)
+        public static ISubscription<Note> Notate<TItem>(this ISubscription<TItem> subscription, Func<TItem, Note> notation)
             where TItem : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (notation == null)
             {
                 throw new ArgumentNullException(nameof(notation));
             }
 
-            return observation.Notate(new Notation<TItem>(notation));
+            return subscription.Notate(new Notation<TItem>(notation));
         }
 
         public static IIndication<TItem> Notated<TItem>(this IIndication<Note> indication, Func<TItem, Note> notation)
@@ -78,19 +78,19 @@ namespace YggdrAshill.Heimdallr
 
         #region INotification
 
-        public static IObservation<Notice> Notify<TItem>(this IObservation<TItem> observation, Func<TItem, bool> notification)
+        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, Func<TItem, bool> notification)
             where TItem : IItem
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (notification == null)
             {
                 throw new ArgumentNullException(nameof(notification));
             }
 
-            return observation.Notify(new Notification<TItem>(notification));
+            return subscription.Notify(new Notification<TItem>(notification));
         }
 
         public static IIndication<TItem> Notified<TItem>(this IIndication<Notice> indication, Func<TItem, bool> notification)
@@ -108,18 +108,18 @@ namespace YggdrAshill.Heimdallr
             return indication.Notified(new Notification<TItem>(notification));
         }
 
-        public static IUnsubscription Subscribe(this IObservation<Notice> observation, Action onIndicated)
+        public static IUnsubscription Subscribe(this ISubscription<Notice> subscription, Action onIndicated)
         {
-            if (observation == null)
+            if (subscription == null)
             {
-                throw new ArgumentNullException(nameof(observation));
+                throw new ArgumentNullException(nameof(subscription));
             }
             if (onIndicated == null)
             {
                 throw new ArgumentNullException(nameof(onIndicated));
             }
 
-            return observation.Subscribe(item =>
+            return subscription.Subscribe(item =>
             {
                 if (item == null)
                 {
