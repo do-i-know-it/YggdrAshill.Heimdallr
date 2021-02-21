@@ -69,7 +69,6 @@ Please see [issues](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/issues
 - Writes documents completely.
   - [Explication](./Documentation/Explication.md)
   - [Historization](./Documentation/Historization.md)
-  - [Items](./Documentation/Items.md)
   - [Implementation](./Documentation/Implementation.md)
 - Adds samples.
 
