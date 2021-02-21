@@ -1,5 +1,13 @@
 # YggdrAshill.Heimdallr: a diagnostic system framework
 
+Heimdallr defines how to
+
+- monitor
+- display
+- alert
+- record
+
+status of applications for mainly XR (VR/AR/MR).  
 This framework is able to isolate definitions from implementations for specific platforms.
 
 - ex) [Unity](https://unity.com/ja)
@@ -59,7 +67,6 @@ Please see [issues](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/issues
 
 - Adds contributing guidelines.
 - Writes documents completely.
-  - [Elucidation](./Documentation/Elucidation.md)
   - [Explication](./Documentation/Explication.md)
   - [Historization](./Documentation/Historization.md)
   - [Items](./Documentation/Items.md)
