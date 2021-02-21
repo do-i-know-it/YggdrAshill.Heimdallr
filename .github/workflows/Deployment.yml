@@ -1,0 +1,104 @@
+name: Deployment
+
+on:
+  push:
+    tags:
+      - version/*
+
+jobs:
+  validation:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Add MSBuild to Path
+        uses: microsoft/setup-msbuild@v1.0.2
+      
+      - name: Restore solution
+        shell: cmd
+        run: dotnet restore
+
+      - name: Test solution
+        shell: cmd
+        run: dotnet test
+  
+  construction:
+    runs-on: windows-2019
+    needs: validation
+    env:
+      BUILD_FILE: build
+      ARTIFACT_DIRECTORY: ARTIFACTS
+      CONFIGURATION: Release
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Add MSBuild to Path
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Build artifacts
+        shell: cmd
+        run : |
+          dotnet msbuild %GITHUB_WORKSPACE%/%BUILD_FILE%.xml -p:^
+          InputPath=%GITHUB_WORKSPACE%^
+          ;OutputPath=%GITHUB_WORKSPACE%/%ARTIFACT_DIRECTORY%^
+          ;Configuration=%CONFIGURATION%^
+            
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{ github.workspace }}/${{ env.ARTIFACT_DIRECTORY }}
+          name: ${{ github.workflow }}
+
+  publication:
+    runs-on: ubuntu-latest
+    needs: construction
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure information
+        shell: bash
+        run : |
+          REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}
+          TAG_NAME=${GITHUB_REF##*/}
+          ASSET_DIRECTORY=${REPOSITORY_NAME}_${TAG_NAME}
+          echo REPOSITORY_NAME=$REPOSITORY_NAME >> $GITHUB_ENV
+          echo TAG_NAME=$TAG_NAME >> $GITHUB_ENV
+          echo ASSET_DIRECTORY=$ASSET_DIRECTORY >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v2
+        with:
+          path: ./${{ env.ASSET_DIRECTORY }}
+          name: ${{ github.workflow }}
+
+      - name: Assembly assets
+        shell: bash
+        run : |
+          rm ./$ASSET_DIRECTORY/*.{pdb,deps.json}
+          zip ./$ASSET_DIRECTORY.zip -r ./$ASSET_DIRECTORY
+      
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_NOTE_FILE: RELEASE_NOTE.md
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ env.TAG_NAME }}
+          body_path: ./${{ env.RELEASE_NOTE_FILE }}
+          draft: false
+          prerelease: false
+
+      - name: Upload assets
+        id: upload-assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.ASSET_DIRECTORY }}.zip
+          asset_name: ${{ env.ASSET_DIRECTORY }}.zip
+          asset_content_type: application/zip
