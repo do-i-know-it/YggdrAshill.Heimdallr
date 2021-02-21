@@ -6,8 +6,8 @@ Items defines some types of `Item`.
 
 This module depends on
 
-- [Elucidation](./Elucidation.md).
-- [Explication](./Explication.md).
+- [Elucidation](./Elucidation.md)
+- [Explication](./Explication.md)
 
 ## Architecture
 

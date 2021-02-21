@@ -6,8 +6,8 @@ Historization defines how to record log about an application as `Item`.
 
 This module depends on
 
-- [Elucidation](./Elucidation.md).
-- [Explication](./Explication.md).
+- [Elucidation](./Elucidation.md)
+- [Explication](./Explication.md)
 
 ## Architecture
 

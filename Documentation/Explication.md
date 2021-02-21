@@ -1,6 +1,6 @@
 # Explication
 
-Explication expands [Elucidation](./Elucidation.md) to define how to convert `Item`.
+Explication extends [Elucidation](./Elucidation.md) to define how to convert `Item`.
 
 ## Dependencies
 
@@ -24,4 +24,4 @@ this module provides operations on `Item` below.
 
 ## Implementation
 
-Nothing except internal implementation for some interfaces of [Itemization](./Itemization.md) and [Conduction](./Conduction.md), because this module only defines how to convert `Item`.
+Nothing except internal implementation for some interfaces of [Elucidation](./Elucidation.md), because this module only defines how to convert `Item`.
