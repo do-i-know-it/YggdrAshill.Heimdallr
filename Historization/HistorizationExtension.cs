@@ -1,5 +1,4 @@
-﻿using YggdrAshill.Heimdallr.Elucidation;
-using YggdrAshill.Heimdallr.Explication;
+using YggdrAshill.Heimdallr.Elucidation;
 using System;
 using System.Threading;
 using System.Runtime.CompilerServices;
@@ -58,26 +57,6 @@ namespace YggdrAshill.Heimdallr.Historization
             var stackTrace = exception.StackTrace;
 
             indication.Log(severity, message, stackTrace, filePath, lineNumber, memberName);
-        }
-
-        public static void Log<TItem>(this IIndication<Log> indication, SeverityLevel severity, TItem item, INotation<TItem> notation,
-            [CallerFilePath] string filePath = "",
-            [CallerLineNumber] int lineNumber = 0,
-            [CallerMemberName] string memberName = "")
-            where TItem : IItem
-        {
-            if (indication == null)
-            {
-                throw new ArgumentNullException(nameof(indication));
-            }
-            if (notation == null)
-            {
-                throw new ArgumentNullException(nameof(notation));
-            }
-
-            var note = notation.Notate(item);
-
-            indication.Log(severity, note.Content, filePath, lineNumber, memberName);
         }
     }
 }

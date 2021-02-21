@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Elucidation\Elucidation.csproj" />
-    <ProjectReference Include="..\Explication\Explication.csproj" />
   </ItemGroup>
 
 </Project>
