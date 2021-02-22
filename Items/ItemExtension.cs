@@ -3,11 +3,13 @@ using System;
 using System.Threading;
 using System.Runtime.CompilerServices;
 
-namespace YggdrAshill.Heimdallr.Historization
+namespace YggdrAshill.Heimdallr.Items
 {
-    public static class HistorizationExtension
+    public static class ItemExtension
     {
-        private static void Log(this IIndication<Log> indication, SeverityLevel severity, string message, string stackTrace,
+        #region Log
+
+        private static void Log(this IIndication<Log> indication, Log.Severity level, string message, string stackTrace,
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0,
             [CallerMemberName] string memberName = "")
@@ -15,12 +17,12 @@ namespace YggdrAshill.Heimdallr.Historization
             var dateTime = DateTime.Now;
             var thread = Thread.CurrentThread.ManagedThreadId;
 
-            var log = new Log(severity, dateTime, message, stackTrace, thread, filePath, lineNumber, memberName);
+            var log = new Log(level, dateTime, message, stackTrace, thread, filePath, lineNumber, memberName);
 
             indication.Indicate(log);
         }
 
-        public static void Log(this IIndication<Log> indication, SeverityLevel severity, string message,
+        public static void Log(this IIndication<Log> indication, Log.Severity level, string message,
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0,
             [CallerMemberName] string memberName = "")
@@ -36,10 +38,10 @@ namespace YggdrAshill.Heimdallr.Historization
 
             var stackTrace = Environment.StackTrace;
 
-            indication.Log(severity, message, stackTrace, filePath, lineNumber, memberName);
+            indication.Log(level, message, stackTrace, filePath, lineNumber, memberName);
         }
 
-        public static void Log(this IIndication<Log> indication, SeverityLevel severity, Exception exception,
+        public static void Log(this IIndication<Log> indication, Log.Severity level, Exception exception,
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0,
             [CallerMemberName] string memberName = "")
@@ -56,7 +58,9 @@ namespace YggdrAshill.Heimdallr.Historization
             var message = exception.ToString();
             var stackTrace = exception.StackTrace;
 
-            indication.Log(severity, message, stackTrace, filePath, lineNumber, memberName);
+            indication.Log(level, message, stackTrace, filePath, lineNumber, memberName);
         }
+
+        #endregion
     }
 }
