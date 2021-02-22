@@ -68,7 +68,6 @@ Please see [issues](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/issues
 - Adds contributing guidelines.
 - Writes documents completely.
   - [Explication](./Documentation/Explication.md)
-  - [Historization](./Documentation/Historization.md)
   - [Implementation](./Documentation/Implementation.md)
 - Adds samples.
 
