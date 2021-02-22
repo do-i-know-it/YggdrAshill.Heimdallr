@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
-using YggdrAshill.Heimdallr.Historization;
+using NUnit.Framework;
+using YggdrAshill.Heimdallr.Items;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(HistorizationExtension))]
-    internal class HistorizationExtensionSpecification
+    [TestFixture(TestOf = typeof(ItemExtension))]
+    internal class LogSpecification
     {
         [TestCase("message")]
         [TestCase("")]
@@ -17,7 +17,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 consumed = signal;
             });
 
-            indication.Log(SeverityLevel.Information, expected);
+            indication.Log(Log.Severity.Information, expected);
 
             Assert.AreEqual(expected, consumed.Message);
         }
@@ -33,14 +33,14 @@ namespace YggdrAshill.Heimdallr.Specification
 
             var expected = new Exception();
 
-            indication.Log(SeverityLevel.Information, expected);
+            indication.Log(Log.Severity.Information, expected);
 
             Assert.AreEqual(expected.ToString(), consumed.Message);
         }
 
-        [TestCase(SeverityLevel.Fatal)]
-        [TestCase(SeverityLevel.None)]
-        public void ShouldLogSeverityLevel(SeverityLevel expected)
+        [TestCase(Log.Severity.Fatal)]
+        [TestCase(Log.Severity.None)]
+        public void ShouldLogLevel(Log.Severity expected)
         {
             var consumed = default(Log);
             var indication = new Indication<Log>(signal =>
@@ -50,7 +50,7 @@ namespace YggdrAshill.Heimdallr.Specification
 
             indication.Log(expected, "");
 
-            Assert.AreEqual(expected, consumed.Severity);
+            Assert.AreEqual(expected, consumed.Level);
         }
     }
 }

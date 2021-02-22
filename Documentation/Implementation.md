@@ -1,23 +1,42 @@
 # Implementation of YggdrAshill.Heimdallr
 
-This module implements interfaces defined in all modules in this component.
+This module provides
 
-- [Elucidation](./Elucidation.md).
-- [Explication](./Explication.md).
-- [Items](./Items.md).
+- implementations
+- extensions
+
+for modules below.
+
+- [Elucidation](./Elucidation.md)
+- [Explication](./Explication.md)
 
 ## Dependencies
 
 This module depends on
 
-- [Elucidation](./Elucidation.md).
-- [Explication](./Explication.md).
-- [Items](./Items.md).
+- [Elucidation](./Elucidation.md)
+- [Explication](./Explication.md)
 
 ## Architecture
 
-No architecture because this module implements interfaces.
+This module implements
+
+- interfaces
+- extensions
+
+in order developers to use this framework in ease.
 
 ## Implementation
 
-Now writing...
+This module provides simple implementations for
+
+- [Elucidation](./Elucidation.md)
+- [Explication](./Explication.md)
+
+generated with `System.Action` or `System.Function`.  
+Also, this module provides useful extensions for
+
+- [Elucidation](./Elucidation.md)
+- [Explication](./Explication.md)
+
+to use `System.Action` or `System.Function`.

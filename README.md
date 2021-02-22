@@ -1,5 +1,19 @@
 # YggdrAshill.Heimdallr: a diagnostic system framework
 
+Heimdallr defines how to
+
+- monitor
+- display
+- alert
+- record
+
+status of applications for mainly XR (VR/AR/MR).  
+This framework is able to isolate definitions from implementations for specific platforms.
+
+- ex) [Unity](https://unity.com/ja)
+- ex) [Xamarin](https://docs.microsoft.com/ja-jp/xamarin/get-started/what-is-xamarin)
+- ex) [Windows Presentation Foundation (WPF)](https://docs.microsoft.com/ja-jp/visualstudio/designers/getting-started-with-wpf?view=vs-2019)
+
 <!-- ## Specifications
 
 Now writing...
@@ -14,18 +28,16 @@ Now writing... -->
 
 ## Dependencies
 
-Heimdallr depends on
-
-- Now writing...
+Heimdallr depends on .NET Standard 2.0.
 
 ## Installation
 
-In future, we will deploy dlls built to this repository, but now you should
+Developers should
 
-1. Clone this repository.
-1. Open cloned directory with Visual Studio.
-1. Build for any CPU as Debug or Release.
-1. Include built dlls to your project.
+1. Go to [Release pages](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/releases).
+1. Download the latest version.
+
+to use this framework.
 
 ## Usage
 
@@ -37,39 +49,32 @@ Heimdallr consists of core modules below.
 
 - [Elucidation](./Documentation/Elucidation.md)
 - [Explication](./Documentation/Explication.md)
-- [Historization](./Documentation/Historization.md)
 
-This framework also includes sub modules below.
-
-- [Items](./Documentation/Items.md)
-- [Implementation](./Documentation/Implementation.md)
+This framework also includes [Items](./Documentation/Items.md).
 
 ### Implementation
 
+Heimdallr includes [Implementation](./Documentation/Implementation.md) to provide implementations and extensions for above.
+
 ## Known issues
 
-Nothing now.
+Please see [issues](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/issues).
 
 ## Future works
 
 ### ~ Version 1.0.0
 
-- Sets up build pipeline.
-  - auto testing
-  - auto building
-- Writes documents completely.
+- Adds contributing guidelines.
+- Writes document comments completely.
   - [Elucidation](./Documentation/Elucidation.md)
   - [Explication](./Documentation/Explication.md)
-  - [Historization](./Documentation/Historization.md)
   - [Items](./Documentation/Items.md)
   - [Implementation](./Documentation/Implementation.md)
-  - samples
-  - templates for Pull requests, issue, and contributing guidelines.
+- Adds samples.
 
 ### Version 1.0.0 ~
 
 - Adds definitions for Items.
-- Adds implementations for [Historization](./Documentation/Historization.md).
 
 ## License
 
@@ -77,5 +82,5 @@ Heimdallr is under the MIT License, see [LICENSE](./LICENSE.txt).
 
 ## Remarks
 
-Heimdallr is a part of the framework of YggdrAshill.  
-We will produce other frameworks for YggdrAshill.
+Heimdallr is a part of YggdrAshill framework.  
+Other frameworks will be produced soon for YggdrAshill.

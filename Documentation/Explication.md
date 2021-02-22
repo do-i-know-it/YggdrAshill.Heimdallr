@@ -1,6 +1,6 @@
 # Explication
 
-Explication expands [Elucidation](./Elucidation.md) to define how to convert `Item`.
+Explication extends [Elucidation](./Elucidation.md) to define how to convert `Item`.
 
 ## Dependencies
 
@@ -16,12 +16,12 @@ This module depends on [Elucidation](./Elucidation.md).
 | Notice | `Item` to send when `Condition` is satisfied by `Item`. |
 | Notification | Notifies `Notice` when `Condition` is satisfied by `Item`. |
 
-this module provides operations on `Item` below.
+This module enables developers to
 
-- `Translation`
-- `Notation`
-- `Notification`
+- translate one `Item` to other `Item`.
+- notate `item` as text by formatting.
+- notify when conditions are satisfied by `Item`.
 
 ## Implementation
 
-Nothing except internal implementation for some interfaces of [Itemization](./Itemization.md) and [Conduction](./Conduction.md), because this module only defines how to convert `Item`.
+Nothing except internal implementation for some interfaces of [Elucidation](./Elucidation.md), because this module only defines how to convert `Item`.
