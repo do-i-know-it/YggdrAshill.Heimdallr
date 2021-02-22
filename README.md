@@ -49,7 +49,6 @@ Heimdallr consists of core modules below.
 
 - [Elucidation](./Documentation/Elucidation.md)
 - [Explication](./Documentation/Explication.md)
-- [Historization](./Documentation/Historization.md)
 
 This framework also includes [Items](./Documentation/Items.md).
 
@@ -66,12 +65,9 @@ Please see [issues](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/issues
 ### ~ Version 1.0.0
 
 - Adds contributing guidelines.
-- Writes documents completely.
-  - [Explication](./Documentation/Explication.md)
 - Writes document comments completely.
   - [Elucidation](./Documentation/Elucidation.md)
   - [Explication](./Documentation/Explication.md)
-  - [Historization](./Documentation/Historization.md)
   - [Items](./Documentation/Items.md)
   - [Implementation](./Documentation/Implementation.md)
 - Adds samples.
@@ -79,7 +75,6 @@ Please see [issues](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/issues
 ### Version 1.0.0 ~
 
 - Adds definitions for Items.
-- Adds implementations for [Historization](./Documentation/Historization.md).
 
 ## License
 

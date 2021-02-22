@@ -16,5 +16,13 @@ This module defines
 
 - `Battery`
 - `MemoryUsage`
+- `Log`
 
 as `Item`.
+
+This module can record
+
+- exceptions or messages
+- stack traces
+
+as `Log` to know what happened to applications.

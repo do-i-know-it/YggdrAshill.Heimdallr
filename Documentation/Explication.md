@@ -16,11 +16,11 @@ This module depends on [Elucidation](./Elucidation.md).
 | Notice | `Item` to send when `Condition` is satisfied by `Item`. |
 | Notification | Notifies `Notice` when `Condition` is satisfied by `Item`. |
 
-this module provides operations on `Item` below.
+This module enables developers to
 
-- `Translation`
-- `Notation`
-- `Notification`
+- translate one `Item` to other `Item`.
+- notate `item` as text by formatting.
+- notify when conditions are satisfied by `Item`.
 
 ## Implementation
 

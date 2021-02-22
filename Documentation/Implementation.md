@@ -9,7 +9,6 @@ for modules below.
 
 - [Elucidation](./Elucidation.md)
 - [Explication](./Explication.md)
-- [Items](./Items.md)
 
 ## Dependencies
 
@@ -17,7 +16,6 @@ This module depends on
 
 - [Elucidation](./Elucidation.md)
 - [Explication](./Explication.md)
-- [Items](./Items.md)
 
 ## Architecture
 
