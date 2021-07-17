@@ -10,7 +10,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldExecuteFunctionWhenHasCheckedCondition()
         {
             var expected = false;
-            var condition = new Condition<Item>(item =>
+            var condition = new Condition<Information>(item =>
             {
                 if (item == null)
                 {
@@ -20,7 +20,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 return expected = true;
             });
 
-            condition.IsSatisfied(new Item());
+            condition.IsSatisfiedBy(new Information());
 
             Assert.IsTrue(expected);
         }
@@ -30,7 +30,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var condition = new Condition<Item>(null);
+                var condition = new Condition<Information>(null);
             });
         }
     }

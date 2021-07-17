@@ -6,7 +6,7 @@ namespace YggdrAshill.Heimdallr
 {
     public sealed class Condition<TItem> :
         ICondition<TItem>
-        where TItem : IItem
+        where TItem : IInformation
     {
         public static ICondition<TItem> All { get; }
             = new Condition<TItem>(_ =>
@@ -32,7 +32,7 @@ namespace YggdrAshill.Heimdallr
             this.onNotified = onNotified;
         }
 
-        public bool IsSatisfied(TItem item)
+        public bool IsSatisfiedBy(TItem item)
         {
             return onNotified.Invoke(item);
         }

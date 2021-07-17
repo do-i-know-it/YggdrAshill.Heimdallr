@@ -6,8 +6,8 @@ namespace YggdrAshill.Heimdallr
 {
     public sealed class Translation<TInput, TOutput> :
         ITranslation<TInput, TOutput>
-        where TInput : IItem
-        where TOutput : IItem
+        where TInput : IInformation
+        where TOutput : IInformation
     {
         private readonly Func<TInput, TOutput> onTranslated;
 

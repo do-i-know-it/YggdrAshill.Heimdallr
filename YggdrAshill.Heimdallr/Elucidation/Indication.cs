@@ -3,41 +3,67 @@ using System;
 
 namespace YggdrAshill.Heimdallr
 {
-    public sealed class Indication<TItem> :
-        IIndication<TItem>
-        where TItem : IItem
+    /// <summary>
+    /// Defines implementations of <see cref="IIndication{TInformation}"/>.
+    /// </summary>
+    public static class Indication
     {
-        private readonly Action<TItem> onIndicated;
-
-        #region Constructor
-
-        public Indication(Action<TItem> onIndicated)
+        /// <summary>
+        /// Executes <see cref="Action{T}"/>.
+        /// </summary>
+        /// <typeparam name="TInformation">
+        /// Type of <see cref="IInformation"/> to indicate.
+        /// </typeparam>
+        /// <param name="indication">
+        /// <see cref="Action{T}"/> to indicate <typeparamref name="TInformation"/>.
+        /// </param>
+        /// <returns>
+        /// <see cref="IIndication{TInformation}"/> created.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="indication"/> is null.
+        /// </exception>
+        public static IIndication<TInformation> Of<TInformation>(Action<TInformation> indication)
+            where TInformation : IInformation
         {
-            if (onIndicated == null)
+            if (indication == null)
             {
-                throw new ArgumentNullException(nameof(onIndicated));
+                throw new ArgumentNullException(nameof(indication));
             }
 
-            this.onIndicated = onIndicated;
+            return new Created<TInformation>(indication);
         }
-
-        public Indication()
+        private sealed class Created<TInformation> :
+            IIndication<TInformation>
+            where TInformation : IInformation
         {
-            onIndicated = (_) =>
+            private readonly Action<TInformation> onIndicated;
+
+            internal Created(Action<TInformation> onIndicated)
             {
+                this.onIndicated = onIndicated;
+            }
 
-            };
+            /// <inheritdoc/>
+            public void Indicate(TInformation information)
+            {
+                onIndicated.Invoke(information);
+            }
         }
 
-        #endregion
-
-        #region IIndication
-
-        public void Indicate(TItem item)
+        /// <summary>
+        /// Executes none.
+        /// </summary>
+        /// <typeparam name="TInformation">
+        /// Type of <see cref="IInformation"/> to indicate.
+        /// </typeparam>
+        /// <returns>
+        /// <see cref="IIndication{TInformation}"/> created.
+        /// </returns>
+        public static IIndication<TInformation> None<TInformation>()
+            where TInformation : IInformation
         {
-            onIndicated.Invoke(item);
+            return Of<TInformation>(_ => { });
         }
-
-        #endregion
     }
 }

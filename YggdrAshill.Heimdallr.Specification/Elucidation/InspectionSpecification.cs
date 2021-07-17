@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
@@ -10,7 +10,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldExecuteActionWhenHasInspected()
         {
             var expected = false;
-            var inspection = new Inspection(() =>
+            var inspection =Inspection.Of(() =>
             {
                 expected = true;
             });
@@ -25,7 +25,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var inspection = new Inspection(null);
+                var inspection = Inspection.Of(null);
             });
         }
     }

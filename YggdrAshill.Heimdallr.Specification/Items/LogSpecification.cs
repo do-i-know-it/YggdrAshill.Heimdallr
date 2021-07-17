@@ -1,56 +1,54 @@
 using NUnit.Framework;
-using YggdrAshill.Heimdallr.Items;
+using YggdrAshill.Heimdallr.Elucidation;
+using YggdrAshill.Heimdallr.Explication;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(ItemExtension))]
-    internal class LogSpecification
+    [TestFixture(TestOf = typeof(Log))]
+    [TestFixture(TestOf = typeof(LogExtension))]
+    internal class LogSpecification :
+        IIndication<Log>
     {
-        [TestCase("message")]
-        [TestCase("")]
-        public void ShouldLogMessage(string expected)
+        private Log recorded;
+
+        public void Indicate(Log information)
         {
-            var consumed = default(Log);
-            var indication = new Indication<Log>(signal =>
-            {
-                consumed = signal;
-            });
-
-            indication.Log(Log.Severity.Information, expected);
-
-            Assert.AreEqual(expected, consumed.Message);
+            recorded = information;
         }
 
-        [Test]
-        public void ShouldLogException()
+        private IIndication<Log> indication;
+
+        [SetUp]
+        public void SetUp()
         {
-            var consumed = default(Log);
-            var indication = new Indication<Log>(signal =>
-            {
-                consumed = signal;
-            });
+            recorded = default;
 
-            var expected = new Exception();
-
-            indication.Log(Log.Severity.Information, expected);
-
-            Assert.AreEqual(expected.ToString(), consumed.Message);
+            indication = this;
         }
 
-        [TestCase(Log.Severity.Fatal)]
-        [TestCase(Log.Severity.None)]
-        public void ShouldLogLevel(Log.Severity expected)
+        [TestCase(Log.Severity.Fatal, "message")]
+        [TestCase(Log.Severity.None, "")]
+        public void ShouldRecordMessage(Log.Severity level, string message)
         {
-            var consumed = default(Log);
-            var indication = new Indication<Log>(signal =>
-            {
-                consumed = signal;
-            });
+            indication.Record(level, message);
 
-            indication.Log(expected, "");
+            Assert.AreEqual(level, recorded.Level);
+            Assert.AreEqual(message, recorded.Message);
+        }
 
-            Assert.AreEqual(expected, consumed.Level);
+        [TestCase(Log.Severity.Fatal, "message")]
+        [TestCase(Log.Severity.None, "")]
+        public void ShouldRecordException(Log.Severity level, string message)
+        {
+            var expected = new Exception(message);
+
+            indication.Record(level, expected);
+
+            Assert.AreEqual(level, recorded.Level);
+            Assert.AreEqual(expected.ToString(), recorded.Message);
+
+            Console.WriteLine(recorded.Message);
         }
     }
 }

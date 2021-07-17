@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using YggdrAshill.Heimdallr.Explication;
 using System;
 
@@ -11,7 +11,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldExecuteFunctionWhenHasNotated()
         {
             var expected = false;
-            var notation = new Notation<Item>(item =>
+            var notation = new Notation<Information>(item =>
             {
                 if (item == null)
                 {
@@ -20,10 +20,10 @@ namespace YggdrAshill.Heimdallr.Specification
 
                 expected = true;
 
-                return new Note("");
+                return Note.None;
             });
 
-            notation.Notate(new Item());
+            notation.Notate(new Information());
 
             Assert.IsTrue(expected);
         }
@@ -33,7 +33,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notation = new Notation<Item>(null);
+                var notation = new Notation<Information>(null);
             });
         }
     }

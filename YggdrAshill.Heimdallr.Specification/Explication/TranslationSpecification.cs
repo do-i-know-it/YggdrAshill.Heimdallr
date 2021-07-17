@@ -10,7 +10,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldExecuteFunctionWhenHasTranslated()
         {
             var expected = false;
-            var translation = new Translation<InputItem, OutputItem>(item =>
+            var translation = new Translation<InputInformation, OutputInformation>(item =>
             {
                 if (item == null)
                 {
@@ -19,10 +19,10 @@ namespace YggdrAshill.Heimdallr.Specification
 
                 expected = true;
 
-                return new OutputItem();
+                return new OutputInformation();
             });
 
-            translation.Translate(new InputItem());
+            translation.Translate(new InputInformation());
 
             Assert.IsTrue(expected);
         }
@@ -32,7 +32,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translation = new Translation<InputItem, OutputItem>(null);
+                var translation = new Translation<InputInformation, OutputInformation>(null);
             });
         }
     }

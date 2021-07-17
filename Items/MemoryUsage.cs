@@ -4,7 +4,7 @@ using System;
 namespace YggdrAshill.Heimdallr.Items
 {
     public struct MemoryUsage :
-        IItem,
+        IInformation,
         IEquatable<MemoryUsage>
     {
         public long UsedSize { get; }

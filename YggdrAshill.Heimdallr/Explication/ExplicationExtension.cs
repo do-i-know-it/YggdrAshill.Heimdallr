@@ -1,4 +1,4 @@
-﻿using YggdrAshill.Heimdallr.Elucidation;
+using YggdrAshill.Heimdallr.Elucidation;
 using YggdrAshill.Heimdallr.Explication;
 using System;
 
@@ -6,27 +6,27 @@ namespace YggdrAshill.Heimdallr
 {
     public static class ExplicationExtension
     {
-        #region Translation
+        #region Translate
 
-        public static ISubscription<TOutput> Translate<TInput, TOutput>(this ISubscription<TInput> subscription, Func<TInput, TOutput> translation)
-            where TInput : IItem
-            where TOutput : IItem
+        public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, Func<TInput, TOutput> translation)
+            where TInput : IInformation
+            where TOutput : IInformation
         {
-            if (subscription == null)
+            if (observation == null)
             {
-                throw new ArgumentNullException(nameof(subscription));
+                throw new ArgumentNullException(nameof(observation));
             }
             if (translation == null)
             {
                 throw new ArgumentNullException(nameof(translation));
             }
 
-            return subscription.Translate(new Translation<TInput, TOutput>(translation));
+            return observation.Translate(new Translation<TInput, TOutput>(translation));
         }
 
         public static IIndication<TInput> Translate<TInput, TOutput>(this IIndication<TOutput> indication, Func<TInput, TOutput> translation)
-            where TInput : IItem
-            where TOutput : IItem
+            where TInput : IInformation
+            where TOutput : IInformation
         {
             if (indication == null)
             {
@@ -42,59 +42,25 @@ namespace YggdrAshill.Heimdallr
 
         #endregion
 
-        #region Notation
-
-        public static ISubscription<Note> Notate<TItem>(this ISubscription<TItem> subscription, Func<TItem, Note> notation)
-            where TItem : IItem
-        {
-            if (subscription == null)
-            {
-                throw new ArgumentNullException(nameof(subscription));
-            }
-            if (notation == null)
-            {
-                throw new ArgumentNullException(nameof(notation));
-            }
-
-            return subscription.Notate(new Notation<TItem>(notation));
-        }
-
-        public static IIndication<TItem> Notate<TItem>(this IIndication<Note> indication, Func<TItem, Note> notation)
-            where TItem : IItem
-        {
-            if (indication == null)
-            {
-                throw new ArgumentNullException(nameof(indication));
-            }
-            if (notation == null)
-            {
-                throw new ArgumentNullException(nameof(notation));
-            }
-
-            return indication.Notate(new Notation<TItem>(notation));
-        }
-
-        #endregion
-
         #region INotification
 
-        public static ISubscription<Notice> Notify<TItem>(this ISubscription<TItem> subscription, Func<TItem, bool> condition)
-            where TItem : IItem
+        public static IObservation<Notice> Detect<TInformation>(this IObservation<TInformation> observation, Func<TInformation, bool> condition)
+            where TInformation : IInformation
         {
-            if (subscription == null)
+            if (observation == null)
             {
-                throw new ArgumentNullException(nameof(subscription));
+                throw new ArgumentNullException(nameof(observation));
             }
             if (condition == null)
             {
                 throw new ArgumentNullException(nameof(condition));
             }
 
-            return subscription.Notify(new Condition<TItem>(condition));
+            return observation.Detect(new Condition<TInformation>(condition));
         }
 
-        public static IIndication<TItem> Notify<TItem>(this IIndication<Notice> indication, Func<TItem, bool> condition)
-            where TItem : IItem
+        public static IIndication<TInformation> Detect<TInformation>(this IIndication<Notice> indication, Func<TInformation, bool> condition)
+            where TInformation : IInformation
         {
             if (indication == null)
             {
@@ -105,28 +71,28 @@ namespace YggdrAshill.Heimdallr
                 throw new ArgumentNullException(nameof(condition));
             }
 
-            return indication.Notify(new Condition<TItem>(condition));
+            return indication.Detect(new Condition<TInformation>(condition));
         }
 
-        public static IUnsubscription Subscribe(this ISubscription<Notice> subscription, Action onIndicated)
+        public static IInspection Observe(this IObservation<Notice> observation, Action indication)
         {
-            if (subscription == null)
+            if (observation == null)
             {
-                throw new ArgumentNullException(nameof(subscription));
+                throw new ArgumentNullException(nameof(observation));
             }
-            if (onIndicated == null)
+            if (indication == null)
             {
-                throw new ArgumentNullException(nameof(onIndicated));
+                throw new ArgumentNullException(nameof(indication));
             }
 
-            return subscription.Subscribe(item =>
+            return observation.Observe(information =>
             {
-                if (item == null)
+                if (information == null)
                 {
-                    throw new ArgumentNullException(nameof(item));
+                    throw new ArgumentNullException(nameof(information));
                 }
 
-                onIndicated.Invoke();
+                indication.Invoke();
             });
         }
 

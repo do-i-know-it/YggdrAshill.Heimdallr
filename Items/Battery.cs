@@ -4,7 +4,7 @@ using System;
 namespace YggdrAshill.Heimdallr.Items
 {
     public struct Battery :
-        IItem,
+        IInformation,
         IEquatable<Battery>
     {
         public float Level { get; }

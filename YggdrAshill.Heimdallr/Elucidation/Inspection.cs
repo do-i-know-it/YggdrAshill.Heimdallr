@@ -1,42 +1,49 @@
-﻿using YggdrAshill.Heimdallr.Elucidation;
+using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
 namespace YggdrAshill.Heimdallr
 {
+    /// <summary>
+    /// Implementation of <see cref="IInspection"/>.
+    /// </summary>
     public sealed class Inspection :
         IInspection
     {
-        private readonly Action onInspected;
-
-        #region Constructor
-        
-        public Inspection(Action onInspected)
+        /// <summary>
+        /// Executes <see cref="Action"/>.
+        /// </summary>
+        /// <param name="inspection">
+        /// <see cref="Action"/> to inspect.
+        /// </param>
+        /// <returns>
+        /// <see cref="Inspection"/> created.
+        /// </returns>
+        public static Inspection Of(Action inspection)
         {
-            if (onInspected == null)
+            if (inspection == null)
             {
-                throw new ArgumentNullException(nameof(onInspected));
+                throw new ArgumentNullException(nameof(inspection));
             }
 
+            return new Inspection(inspection);
+        }
+
+        /// <summary>
+        /// Executes none.
+        /// </summary>
+        public static Inspection None { get; } = Of(() => { });
+
+        private readonly Action onInspected;
+
+        private Inspection(Action onInspected)
+        {
             this.onInspected = onInspected;
         }
 
-        public Inspection()
-        {
-            onInspected = () =>
-            {
-
-            };
-        }
-
-        #endregion
-
-        #region IInspection
-
+        /// <inheritdoc/>
         public void Inspect()
         {
             onInspected.Invoke();
         }
-
-        #endregion
     }
 }

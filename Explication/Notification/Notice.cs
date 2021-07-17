@@ -1,14 +1,20 @@
-﻿using YggdrAshill.Heimdallr.Elucidation;
+using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
 namespace YggdrAshill.Heimdallr.Explication
 {
+    /// <summary>
+    /// Implementation of <see cref="IInformation"/>.
+    /// </summary>
     public sealed class Notice :
-        IItem,
+        IInformation,
         IEquatable<Notice>
     {
         #region Singleton
 
+        /// <summary>
+        /// <see cref="Notice"/> that only exists.
+        /// </summary>
         public static Notice Instance { get; }
             = new Notice();
 
@@ -21,6 +27,7 @@ namespace YggdrAshill.Heimdallr.Explication
 
         #region IEquatable
 
+        /// <inheritdoc/>
         public bool Equals(Notice other)
         {
             return ReferenceEquals(this, other);

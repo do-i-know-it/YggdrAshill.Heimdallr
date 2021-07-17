@@ -6,7 +6,7 @@ namespace YggdrAshill.Heimdallr
 {
     public sealed class Notation<TItem> :
         INotation<TItem>
-        where TItem : IItem
+        where TItem : IInformation
     {
         private readonly Func<TItem, Note> onNotated;
 
