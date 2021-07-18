@@ -53,6 +53,21 @@ namespace YggdrAshill.Heimdallr
         }
 
         /// <summary>
+        /// Translates all of <typeparamref name="TValue"/> into <see cref="Explication.Note.None"/> even if <typeparamref name="TValue"/> is <see cref="null"/>.
+        /// </summary>
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to notate.
+        /// </typeparam>
+        /// <returns>
+        /// <see cref="INotation{TValue}"/>.
+        /// </returns>
+        public static INotation<TValue> None<TValue>()
+            where TValue : IValue
+        {
+            return Value<TValue>(_ => Explication.Note.None);
+        }
+
+        /// <summary>
         /// Translates <see cref="Explication.Note"/> into <see cref="Explication.Note"/>.
         /// </summary>
         /// <typeparam name="TValue">

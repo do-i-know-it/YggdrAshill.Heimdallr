@@ -140,7 +140,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translated = default(IIndication<Note>).Translate<Value>(_ => Note.None);
+                var translated = default(IIndication<Note>).Translate(NoteOf.None<Value>());
             });
 
             Assert.Throws<ArgumentNullException>(() =>
@@ -154,7 +154,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translated = default(IObservation<Value>).Translate(_ => Note.None);
+                var translated = default(IObservation<Value>).Translate(NoteOf.None<Value>());
             });
 
             Assert.Throws<ArgumentNullException>(() =>
