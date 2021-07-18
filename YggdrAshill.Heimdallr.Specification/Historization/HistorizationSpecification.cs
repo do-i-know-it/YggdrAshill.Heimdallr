@@ -1,20 +1,20 @@
 using NUnit.Framework;
 using YggdrAshill.Heimdallr.Elucidation;
-using YggdrAshill.Heimdallr.Explication;
+using YggdrAshill.Heimdallr.Historization;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(Log))]
     [TestFixture(TestOf = typeof(LogExtension))]
-    internal class LogSpecification :
+    internal class HistorizationSpecification :
         IIndication<Log>
     {
         private Log recorded;
 
-        public void Indicate(Log information)
+        public void Indicate(Log value)
         {
-            recorded = information;
+            recorded = value;
         }
 
         private IIndication<Log> indication;

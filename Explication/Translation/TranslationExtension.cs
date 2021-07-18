@@ -9,133 +9,123 @@ namespace YggdrAshill.Heimdallr.Explication
     public static class TranslationExtension
     {
         /// <summary>
-        /// Translates <typeparamref name="TInput"/> into <typeparamref name="TOutput"/>.
+        /// Translates <typeparamref name="TValue"/> into <see cref="Note"/>.
         /// </summary>
-        /// <typeparam name="TInput">
-        /// Type of <see cref="IInformation"/> for input.
-        /// </typeparam>
-        /// <typeparam name="TOutput">
-        /// Type of <see cref="IInformation"/> for output.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to notate.
         /// </typeparam>
         /// <param name="indication">
-        /// <see cref="IIndication{TInformation}"/> to send <typeparamref name="TOutput"/>.
+        /// <see cref="IIndication{TValue}"/> to receive <see cref="Note"/>.
         /// </param>
-        /// <param name="translation">
-        /// <see cref="ITranslation{TInput, TOutput}"/> to translate.
+        /// <param name="notation">
+        /// <see cref="INotation{TValue}"/> to notate.
         /// </param>
         /// <returns>
-        /// <see cref="IIndication{TInformation}"/> to send <typeparamref name="TInput"/>.
+        /// <see cref="IIndication{TValue}"/> to receive <typeparamref name="TValue"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="indication"/> is null.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="translation"/> is null.
+        /// Thrown if <paramref name="notation"/> is null.
         /// </exception>
-        public static IIndication<TInput> Translate<TInput, TOutput>(this IIndication<TOutput> indication, ITranslation<TInput, TOutput> translation)
-            where TInput : IInformation
-            where TOutput : IInformation
+        public static IIndication<TValue> Translate<TValue>(this IIndication<Note> indication, INotation<TValue> notation)
+            where TValue : IValue
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
-            if (translation == null)
+            if (notation == null)
             {
-                throw new ArgumentNullException(nameof(translation));
+                throw new ArgumentNullException(nameof(notation));
             }
 
-            return new Indication<TInput, TOutput>(translation, indication);
+            return new Indication<TValue>(notation, indication);
         }
-        private sealed class Indication<TInput, TOutput> :
-            IIndication<TInput>
-            where TInput : IInformation
-            where TOutput : IInformation
+        private sealed class Indication<TValue> :
+            IIndication<TValue>
+            where TValue : IValue
         {
-            private readonly IIndication<TOutput> indication;
+            private readonly INotation<TValue> notation;
 
-            private readonly ITranslation<TInput, TOutput> translation;
+            private readonly IIndication<Note> indication;
 
-            internal Indication(ITranslation<TInput, TOutput> translation, IIndication<TOutput> indication)
+            internal Indication(INotation<TValue> notation, IIndication<Note> indication)
             {
                 this.indication = indication;
 
-                this.translation = translation;
+                this.notation = notation;
             }
 
             /// <inheritdoc/>
-            public void Indicate(TInput item)
+            public void Indicate(TValue value)
             {
-                var translated = translation.Translate(item);
+                var notated = notation.Notate(value);
 
-                indication.Indicate(translated);
+                indication.Indicate(notated);
             }
         }
 
         /// <summary>
-        /// Translates <typeparamref name="TInput"/> into <typeparamref name="TOutput"/>.
+        /// Translates <typeparamref name="TValue"/> into <see cref="Note"/>.
         /// </summary>
-        /// <typeparam name="TInput">
-        /// Type of <see cref="IInformation"/> for input.
-        /// </typeparam>
-        /// <typeparam name="TOutput">
-        /// Type of <see cref="IInformation"/> for output.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to notate.
         /// </typeparam>
         /// <param name="observation">
-        /// <see cref="IObservation{TInformation}"/> to send <typeparamref name="TInput"/>.
+        /// <see cref="IObservation{TValue}"/> to send <typeparamref name="TValue"/>.
         /// </param>
-        /// <param name="translation">
-        /// <see cref="ITranslation{TInput, TOutput}"/> to translate.
+        /// <param name="notation">
+        /// <see cref="INotation{TValue}"/> to notate.
         /// </param>
         /// <returns>
-        /// <see cref="IObservation{TInformation}"/> to send <typeparamref name="TOutput"/>.
+        /// <see cref="IObservation{TValue}"/> to send <see cref="Note"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="observation"/> is null.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// Thrown if <paramref name="translation"/> is null.
+        /// Thrown if <paramref name="notation"/> is null.
         /// </exception>
-        public static IObservation<TOutput> Translate<TInput, TOutput>(this IObservation<TInput> observation, ITranslation<TInput, TOutput> translation)
-            where TInput : IInformation
-            where TOutput : IInformation
+        public static IObservation<Note> Translate<TValue>(this IObservation<TValue> observation, INotation<TValue> notation)
+            where TValue : IValue
         {
             if (observation == null)
             {
                 throw new ArgumentNullException(nameof(observation));
             }
-            if (translation == null)
+            if (notation == null)
             {
-                throw new ArgumentNullException(nameof(translation));
+                throw new ArgumentNullException(nameof(notation));
             }
 
-            return new Observation<TInput, TOutput>(observation, translation);
+            return new Observation<TValue>(observation, notation);
         }
-        private sealed class Observation<TInput, TOutput> :
-            IObservation<TOutput>
-            where TInput : IInformation
-            where TOutput : IInformation
+        private sealed class Observation<TValue> :
+            IObservation<Note>
+            where TValue : IValue
         {
-            private readonly IObservation<TInput> observation;
+            private readonly IObservation<TValue> observation;
 
-            private readonly ITranslation<TInput, TOutput> translation;
+            private readonly INotation<TValue> notation;
 
-            internal Observation(IObservation<TInput> observation, ITranslation<TInput, TOutput> translation)
+            internal Observation(IObservation<TValue> observation, INotation<TValue> notation)
             {
                 this.observation = observation;
 
-                this.translation = translation;
+                this.notation = notation;
             }
 
             /// <inheritdoc/>
-            public IInspection Observe(IIndication<TOutput> indication)
+            public IInspection Observe(IIndication<Note> indication)
             {
                 if (indication == null)
                 {
                     throw new ArgumentNullException(nameof(indication));
                 }
 
-                return observation.Observe(indication.Translate(translation));
+                return observation.Observe(indication.Translate(notation));
             }
         }
     }

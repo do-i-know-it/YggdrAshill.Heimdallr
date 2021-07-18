@@ -4,17 +4,19 @@ using System;
 namespace YggdrAshill.Heimdallr.Explication
 {
     /// <summary>
-    /// Implementation of <see cref="IInformation"/>.
+    /// Implementation of <see cref="IValue"/>.
     /// </summary>
     public struct Note :
-        IInformation,
+        IValue,
         IEquatable<Note>
     {
         public static Note None { get; } = new Note(string.Empty);
 
         private string content;
-        private bool initialized;
-        private string Content
+        /// <summary>
+        /// <see cref="Content"/> of <see cref="Note"/>.
+        /// </summary>
+        public string Content
         {
             get
             {
@@ -28,6 +30,7 @@ namespace YggdrAshill.Heimdallr.Explication
                 return content;
             }
         }
+        private bool initialized;
 
         /// <summary>
         /// Constructs an instance.
@@ -70,9 +73,9 @@ namespace YggdrAshill.Heimdallr.Explication
                 return true;
             }
 
-            if (obj is Note information)
+            if (obj is Note value)
             {
-                return Equals(information);
+                return Equals(value);
             }
 
             return false;
@@ -82,34 +85,6 @@ namespace YggdrAshill.Heimdallr.Explication
         public bool Equals(Note other)
         {
             return Content.Equals(other.Content);
-        }
-
-        /// <summary>
-        /// Converts explicitly <see cref="string"/> to <see cref="Note"/>.
-        /// </summary>
-        /// <param name="information">
-        /// <see cref="string"/> to covert.
-        /// </param>
-        /// <returns>
-        /// <see cref="Note"/> converted.
-        /// </returns>
-        public static explicit operator Note(string information)
-        {
-            return new Note(information);
-        }
-
-        /// <summary>
-        /// Converts explicitly <see cref="Note"/> to <see cref="string"/>.
-        /// </summary>
-        /// <param name="information">
-        /// <see cref="Note"/> to covert.
-        /// </param>
-        /// <returns>
-        /// <see cref="string"/> converted.
-        /// </returns>
-        public static explicit operator string(Note information)
-        {
-            return information.Content;
         }
 
         /// <summary>

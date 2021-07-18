@@ -1,13 +1,13 @@
 using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
-namespace YggdrAshill.Heimdallr.Explication
+namespace YggdrAshill.Heimdallr.Historization
 {
     /// <summary>
-    /// Implementation of <see cref="IInformation"/> to record.
+    /// Implementation of <see cref="IValue"/> to record.
     /// </summary>
     public struct Log :
-        IInformation
+        IValue
     {
         [Flags]
         public enum Severity : byte

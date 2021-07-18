@@ -9,16 +9,16 @@ namespace YggdrAshill.Heimdallr
     public static class ElucidationExtension
     {
         /// <summary>
-        /// Observes <see cref="Action{T}"/> with <see cref="IEvaluation{TInformation}"/>.
+        /// Observes <see cref="Action{T}"/> with <see cref="IEvaluation{TValue}"/>.
         /// </summary>
-        /// <typeparam name="TInformation">
-        /// Type of <see cref="IInformation"/> to indicate.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to indicate.
         /// </typeparam>
         /// <param name="evaluation">
-        /// <see cref="IEvaluation{TInformation}"/> to send <typeparamref name="TInformation"/>.
+        /// <see cref="IEvaluation{TValue}"/> to send <typeparamref name="TValue"/>.
         /// </param>
         /// <param name="indication">
-        /// <see cref="Action{T}"/> to receive <typeparamref name="TInformation"/>.
+        /// <see cref="Action{T}"/> to receive <typeparamref name="TValue"/>.
         /// </param>
         /// <returns>
         /// <see cref="IInspection"/> to inspect.
@@ -29,8 +29,8 @@ namespace YggdrAshill.Heimdallr
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="indication"/> is null.
         /// </exception>
-        public static IInspection Observe<TInformation>(this IEvaluation<TInformation> evaluation, Action<TInformation> indication)
-            where TInformation : IInformation
+        public static IInspection Observe<TValue>(this IEvaluation<TValue> evaluation, Action<TValue> indication)
+            where TValue : IValue
         {
             if (evaluation == null)
             {
@@ -45,13 +45,13 @@ namespace YggdrAshill.Heimdallr
         }
 
         /// <summary>
-        /// Sends <typeparamref name="TInformation"/> to <see cref="Action{T}"/>.
+        /// Sends <typeparamref name="TValue"/> to <see cref="Action{T}"/>.
         /// </summary>
         /// <param name="observation">
-        /// <see cref="IObservation{TInformation}"/> to send <typeparamref name="TInformation"/>.
+        /// <see cref="IObservation{TValue}"/> to send <typeparamref name="TValue"/>.
         /// </param>
         /// <param name="indication">
-        /// <see cref="Action{T}"/> to receive <typeparamref name="TInformation"/>.
+        /// <see cref="Action{T}"/> to receive <typeparamref name="TValue"/>.
         /// </param>
         /// <returns>
         /// <see cref="IInspection"/> to inspect.
@@ -62,8 +62,8 @@ namespace YggdrAshill.Heimdallr
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if <paramref name="indication"/> is null.
         /// </exception>
-        public static IInspection Observe<TInformation>(this IObservation<TInformation> observation, Action<TInformation> indication)
-            where TInformation : IInformation
+        public static IInspection Observe<TValue>(this IObservation<TValue> observation, Action<TValue> indication)
+            where TValue : IValue
         {
             if (observation == null)
             {

@@ -4,16 +4,14 @@ using System;
 namespace YggdrAshill.Heimdallr.Explication
 {
     /// <summary>
-    /// Implementation of <see cref="IInformation"/>.
+    /// Implementation of <see cref="IValue"/>.
     /// </summary>
     public sealed class Notice :
-        IInformation,
+        IValue,
         IEquatable<Notice>
     {
-        #region Singleton
-
         /// <summary>
-        /// <see cref="Notice"/> that only exists.
+        /// Only <see cref="Notice"/> that exists.
         /// </summary>
         public static Notice Instance { get; }
             = new Notice();
@@ -23,16 +21,10 @@ namespace YggdrAshill.Heimdallr.Explication
 
         }
 
-        #endregion
-
-        #region IEquatable
-
         /// <inheritdoc/>
         public bool Equals(Notice other)
         {
             return ReferenceEquals(this, other);
         }
-
-        #endregion
     }
 }

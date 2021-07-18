@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>YggdrAshill.Heimdallr.Items</AssemblyName>
-    <RootNamespace>YggdrAshill.Heimdallr.Items</RootNamespace>
+    <AssemblyName>YggdrAshill.Heimdallr.Values</AssemblyName>
+    <RootNamespace>YggdrAshill.Heimdallr.Values</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

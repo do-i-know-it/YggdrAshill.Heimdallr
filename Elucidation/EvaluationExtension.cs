@@ -3,21 +3,21 @@ using System;
 namespace YggdrAshill.Heimdallr.Elucidation
 {
     /// <summary>
-    /// Defines extensions for <see cref="IEvaluation{TInformation}"/>.
+    /// Defines extensions for <see cref="IEvaluation{TValue}"/>.
     /// </summary>
     public static class EvaluationExtension
     {
         /// <summary>
-        /// Observes <see cref="IIndication{TInformation}"/> with <see cref="IEvaluation{TInformation}"/>.
+        /// Observes <see cref="IIndication{TValue}"/> with <see cref="IEvaluation{TValue}"/>.
         /// </summary>
-        /// <typeparam name="TInformation">
-        /// Type of <see cref="IInformation"/> to observe.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to observe.
         /// </typeparam>
         /// <param name="evaluation">
-        /// <see cref="IEvaluation{TInformation}"/> to send <typeparamref name="TInformation"/>.
+        /// <see cref="IEvaluation{TValue}"/> to send <typeparamref name="TValue"/>.
         /// </param>
         /// <param name="indication">
-        /// <see cref="IIndication{TInformation}"/> to receive <typeparamref name="TInformation"/>.
+        /// <see cref="IIndication{TValue}"/> to receive <typeparamref name="TValue"/>.
         /// </param>
         /// <returns>
         /// <see cref="IInspection"/> to inspect.
@@ -28,8 +28,8 @@ namespace YggdrAshill.Heimdallr.Elucidation
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="indication"/> is null.
         /// </exception>
-        public static IInspection Observe<TInformation>(this IEvaluation<TInformation> evaluation, IIndication<TInformation> indication)
-            where TInformation : IInformation
+        public static IInspection Observe<TValue>(this IEvaluation<TValue> evaluation, IIndication<TValue> indication)
+            where TValue : IValue
         {
             if (evaluation == null)
             {
@@ -40,17 +40,17 @@ namespace YggdrAshill.Heimdallr.Elucidation
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return new Inspection<TInformation>(evaluation, indication);
+            return new Inspection<TValue>(evaluation, indication);
         }
-        private sealed class Inspection<TInformation> :
+        private sealed class Inspection<TValue> :
             IInspection
-            where TInformation : IInformation
+            where TValue : IValue
         {
-            private readonly IEvaluation<TInformation> evaluation;
+            private readonly IEvaluation<TValue> evaluation;
 
-            private readonly IIndication<TInformation> indication;
+            private readonly IIndication<TValue> indication;
 
-            internal Inspection(IEvaluation<TInformation> evaluation, IIndication<TInformation> indication)
+            internal Inspection(IEvaluation<TValue> evaluation, IIndication<TValue> indication)
             {
                 this.evaluation = evaluation;
 
@@ -60,50 +60,50 @@ namespace YggdrAshill.Heimdallr.Elucidation
             /// <inheritdoc/>
             public void Inspect()
             {
-                var information = evaluation.Evaluate();
+                var value = evaluation.Evaluate();
 
-                indication.Indicate(information);
+                indication.Indicate(value);
             }
         }
 
         /// <summary>
-        /// Converts <see cref="IEvaluation{TInformation}"/> into <see cref="IObservation{TInformation}"/>.
+        /// Converts <see cref="IEvaluation{TValue}"/> into <see cref="IObservation{TValue}"/>.
         /// </summary>
-        /// <typeparam name="TInformation">
-        /// Type of <see cref="IInformation"/> to observe.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to observe.
         /// </typeparam>
         /// <param name="evaluation">
-        /// <see cref="IEvaluation{TInformation}"/> to send <typeparamref name="TInformation"/>.
+        /// <see cref="IEvaluation{TValue}"/> to send <typeparamref name="TValue"/>.
         /// </param>
         /// <returns>
-        /// <see cref="IObservation{TInformation}"/> converted.
+        /// <see cref="IObservation{TValue}"/> converted.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="evaluation"/> is null.
         /// </exception>
-        public static IObservation<TInformation> Observe<TInformation>(this IEvaluation<TInformation> evaluation)
-            where TInformation : IInformation
+        public static IObservation<TValue> Observe<TValue>(this IEvaluation<TValue> evaluation)
+            where TValue : IValue
         {
             if (evaluation == null)
             {
                 throw new ArgumentNullException(nameof(evaluation));
             }
 
-            return new Observation<TInformation>(evaluation);
+            return new Observation<TValue>(evaluation);
         }
-        private sealed class Observation<TInformation> :
-            IObservation<TInformation>
-            where TInformation : IInformation
+        private sealed class Observation<TValue> :
+            IObservation<TValue>
+            where TValue : IValue
         {
-            private readonly IEvaluation<TInformation> evaluation;
+            private readonly IEvaluation<TValue> evaluation;
 
-            internal Observation(IEvaluation<TInformation> evaluation)
+            internal Observation(IEvaluation<TValue> evaluation)
             {
                 this.evaluation = evaluation;
             }
 
             /// <inheritdoc/>
-            public IInspection Observe(IIndication<TInformation> indication)
+            public IInspection Observe(IIndication<TValue> indication)
             {
                 if (indication == null)
                 {

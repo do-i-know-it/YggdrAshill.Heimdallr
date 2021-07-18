@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using YggdrAshill.Heimdallr.Items;
+using YggdrAshill.Heimdallr.Values;
 using System;
 
 namespace YggdrAshill.Heimdallr.Specification

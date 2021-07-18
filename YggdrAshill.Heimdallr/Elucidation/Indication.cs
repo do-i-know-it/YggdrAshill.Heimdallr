@@ -4,66 +4,66 @@ using System;
 namespace YggdrAshill.Heimdallr
 {
     /// <summary>
-    /// Defines implementations of <see cref="IIndication{TInformation}"/>.
+    /// Defines implementations of <see cref="IIndication{TValue}"/>.
     /// </summary>
     public static class Indication
     {
         /// <summary>
         /// Executes <see cref="Action{T}"/>.
         /// </summary>
-        /// <typeparam name="TInformation">
-        /// Type of <see cref="IInformation"/> to indicate.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to indicate.
         /// </typeparam>
         /// <param name="indication">
-        /// <see cref="Action{T}"/> to indicate <typeparamref name="TInformation"/>.
+        /// <see cref="Action{T}"/> to indicate <typeparamref name="TValue"/>.
         /// </param>
         /// <returns>
-        /// <see cref="IIndication{TInformation}"/> created.
+        /// <see cref="IIndication{TValue}"/> created.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="indication"/> is null.
         /// </exception>
-        public static IIndication<TInformation> Of<TInformation>(Action<TInformation> indication)
-            where TInformation : IInformation
+        public static IIndication<TValue> Of<TValue>(Action<TValue> indication)
+            where TValue : IValue
         {
             if (indication == null)
             {
                 throw new ArgumentNullException(nameof(indication));
             }
 
-            return new Created<TInformation>(indication);
+            return new Created<TValue>(indication);
         }
-        private sealed class Created<TInformation> :
-            IIndication<TInformation>
-            where TInformation : IInformation
+        private sealed class Created<TValue> :
+            IIndication<TValue>
+            where TValue : IValue
         {
-            private readonly Action<TInformation> onIndicated;
+            private readonly Action<TValue> onIndicated;
 
-            internal Created(Action<TInformation> onIndicated)
+            internal Created(Action<TValue> onIndicated)
             {
                 this.onIndicated = onIndicated;
             }
 
             /// <inheritdoc/>
-            public void Indicate(TInformation information)
+            public void Indicate(TValue value)
             {
-                onIndicated.Invoke(information);
+                onIndicated.Invoke(value);
             }
         }
 
         /// <summary>
         /// Executes none.
         /// </summary>
-        /// <typeparam name="TInformation">
-        /// Type of <see cref="IInformation"/> to indicate.
+        /// <typeparam name="TValue">
+        /// Type of <see cref="IValue"/> to indicate.
         /// </typeparam>
         /// <returns>
-        /// <see cref="IIndication{TInformation}"/> created.
+        /// <see cref="IIndication{TValue}"/> created.
         /// </returns>
-        public static IIndication<TInformation> None<TInformation>()
-            where TInformation : IInformation
+        public static IIndication<TValue> None<TValue>()
+            where TValue : IValue
         {
-            return Of<TInformation>(_ => { });
+            return Of<TValue>(_ => { });
         }
     }
 }

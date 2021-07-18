@@ -1,20 +1,20 @@
-﻿namespace YggdrAshill.Heimdallr.Elucidation
+namespace YggdrAshill.Heimdallr.Elucidation
 {
     /// <summary>
-    /// Evaluates <typeparamref name="TInformation"/>.
+    /// Evaluates <typeparamref name="TValue"/>.
     /// </summary>
-    /// <typeparam name="TInformation">
-    /// Type of <see cref="IInformation"/> to evaluate.
+    /// <typeparam name="TValue">
+    /// Type of <see cref="IValue"/> to evaluate.
     /// </typeparam>
-    public interface IEvaluation<TInformation>
-        where TInformation : IInformation
+    public interface IEvaluation<TValue>
+        where TValue : IValue
     {
         /// <summary>
-        /// Generates <typeparamref name="TInformation"/>.
+        /// Generates <typeparamref name="TValue"/>.
         /// </summary>
         /// <returns>
-        /// <typeparamref name="TInformation"/> generated.
+        /// <typeparamref name="TValue"/> generated.
         /// </returns>
-        TInformation Evaluate();
+        TValue Evaluate();
     }
 }

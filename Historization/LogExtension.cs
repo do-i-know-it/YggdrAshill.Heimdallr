@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Runtime.CompilerServices;
 
-namespace YggdrAshill.Heimdallr.Explication
+namespace YggdrAshill.Heimdallr.Historization
 {
     /// <summary>
     /// Defines extensions for <see cref="Log"/>.
@@ -14,7 +14,7 @@ namespace YggdrAshill.Heimdallr.Explication
         /// Records <see cref="Log"/>.
         /// </summary>
         /// <param name="indication">
-        /// <see cref="IIndication{TInformation}"/> to record <see cref="Log"/>.
+        /// <see cref="IIndication{TValue}"/> to record <see cref="Log"/>.
         /// </param>
         /// <param name="level">
         /// <see cref="Log.Severity"/> for <see cref="Log.Level"/>.
@@ -60,6 +60,9 @@ namespace YggdrAshill.Heimdallr.Explication
         /// <summary>
         /// Records <see cref="Log"/>.
         /// </summary>
+        /// <param name="indication">
+        /// <see cref="IIndication{TValue}"/> to record <see cref="Log"/>.
+        /// </param>
         /// <param name="level">
         /// <see cref="Log.Severity"/> for <see cref="Log.Level"/>.
         /// </param>

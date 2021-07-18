@@ -10,17 +10,17 @@ namespace YggdrAshill.Heimdallr.Specification
         public void ShouldExecuteActionWhenHasIndicated()
         {
             var expected = false;
-            var indication = Indication.Of<Information>(information =>
+            var indication = Indication.Of<Value>(value =>
             {
-                if (information == null)
+                if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(information));
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 expected = true;
             });
 
-            indication.Indicate(new Information());
+            indication.Indicate(new Value());
 
             Assert.IsTrue(expected);
         }
@@ -30,7 +30,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var indication = Indication.Of<Information>(default);
+                var indication = Indication.Of<Value>(default);
             });
         }
     }

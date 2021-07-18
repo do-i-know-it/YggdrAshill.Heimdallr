@@ -3,23 +3,23 @@ using YggdrAshill.Heimdallr.Elucidation;
 namespace YggdrAshill.Heimdallr.Explication
 {
     /// <summary>
-    /// Converts <typeparamref name="TInformation"/> to <see cref="Note"/>.
+    /// Converts <typeparamref name="TValue"/> to <see cref="Note"/>.
     /// </summary>
-    /// <typeparam name="TInformation">
-    /// Type of <see cref="IInformation"/> to convert.
+    /// <typeparam name="TValue">
+    /// Type of <see cref="IValue"/> to convert.
     /// </typeparam>
-    public interface INotation<TInformation>
-        where TInformation : IInformation
+    public interface INotation<TValue>
+        where TValue : IValue
     {
         /// <summary>
-        /// Notates <typeparamref name="TInformation"/>.
+        /// Notates <typeparamref name="TValue"/>.
         /// </summary>
-        /// <param name="information">
-        /// <typeparamref name="TInformation"/> to notate.
+        /// <param name="value">
+        /// <typeparamref name="TValue"/> to notate.
         /// </param>
         /// <returns>
         /// <see cref="Note"/> notated.
         /// </returns>
-        Note Notate(TInformation information);
+        Note Notate(TValue value);
     }
 }

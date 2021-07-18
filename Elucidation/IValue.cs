@@ -1,9 +1,9 @@
 namespace YggdrAshill.Heimdallr.Elucidation
 {
     /// <summary>
-    /// Defines information to send and receive.
+    /// Defines value to send and receive.
     /// </summary>
-    public interface IInformation
+    public interface IValue
     {
 
     }

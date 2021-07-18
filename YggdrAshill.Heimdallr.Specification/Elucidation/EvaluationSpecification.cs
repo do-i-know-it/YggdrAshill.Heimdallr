@@ -14,7 +14,7 @@ namespace YggdrAshill.Heimdallr.Specification
            {
                expected = true;
 
-               return new Information();
+               return new Value();
            });
 
             evaluation.Evaluate();
@@ -23,9 +23,9 @@ namespace YggdrAshill.Heimdallr.Specification
         }
 
         [Test]
-        public void ShouldEvaluateInformation()
+        public void ShouldEvaluateValue()
         {
-            var expected = new Information();
+            var expected = new Value();
             var evaluation = Evaluation.Of(() =>
             {
                 return expected;
@@ -41,7 +41,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var evaluation = Evaluation.Of(default(Func<Information>));
+                var evaluation = Evaluation.Of(default(Func<Value>));
             });
         }
     }
