@@ -29,7 +29,7 @@ to use this framework.
 
 ## Usage
 
-Please see [sample application](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/tree/main/YggdrAshill.Heimdallr.Samples/Programs.cs).
+Please see [sample application](https://github.com/do-i-know-it/YggdrAshill.Heimdallr/blob/main/YggdrAshill.Heimdallr.Samples/Program.cs).
 
 ## Architecture
 
