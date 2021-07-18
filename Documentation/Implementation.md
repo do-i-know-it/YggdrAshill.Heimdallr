@@ -33,7 +33,8 @@ This module provides simple implementations for
 - [Elucidation](./Elucidation.md)
 - [Explication](./Explication.md)
 
-generated with `System.Action` or `System.Function`.  
+generated with `System.Action` or `System.Function`.
+
 Also, this module provides useful extensions for
 
 - [Elucidation](./Elucidation.md)
