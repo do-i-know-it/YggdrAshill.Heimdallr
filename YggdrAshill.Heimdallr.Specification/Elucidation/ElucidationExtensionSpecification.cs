@@ -21,7 +21,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             expected = new Value();
 
-            observation = this.Convert();
+            observation = this.ToObserve();
         }
 
         [Test]

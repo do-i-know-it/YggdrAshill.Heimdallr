@@ -18,7 +18,7 @@ namespace YggdrAshill.Heimdallr.Specification
                 {
                     return new Value();
                 })
-                .Convert();
+                .ToObserve();
         }
 
         [TestCase("test")]

@@ -49,7 +49,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void SetUp()
         {
             evaluated = new Value();
-            observation = this.Convert();
+            observation = this.ToObserve();
 
             expected = false;
             condition = this;

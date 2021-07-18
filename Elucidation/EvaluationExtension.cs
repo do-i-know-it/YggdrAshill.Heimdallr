@@ -22,7 +22,7 @@ namespace YggdrAshill.Heimdallr.Elucidation
         /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="evaluation"/> is null.
         /// </exception>
-        public static IObservation<TValue> Convert<TValue>(this IEvaluation<TValue> evaluation)
+        public static IObservation<TValue> ToObserve<TValue>(this IEvaluation<TValue> evaluation)
             where TValue : IValue
         {
             if (evaluation == null)

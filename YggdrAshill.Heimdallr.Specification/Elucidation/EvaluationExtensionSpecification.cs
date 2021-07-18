@@ -43,7 +43,7 @@ namespace YggdrAshill.Heimdallr.Specification
         [Test]
         public void ShouldConvertEvaluationIntoObservation()
         {
-            var observation = evaluation.Convert();
+            var observation = evaluation.ToObserve();
 
             var inspection = observation.Observe(indication);
 
@@ -57,14 +57,14 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var observation = default(IEvaluation<Value>).Convert();
+                var observation = default(IEvaluation<Value>).ToObserve();
             });
         }
 
         [Test]
         public void CannotObserveWithNull()
         {
-            var observation = evaluation.Convert();
+            var observation = evaluation.ToObserve();
             Assert.Throws<ArgumentNullException>(() =>
             {
                 var inspection = observation.Observe(default(IIndication<Value>));
