@@ -61,9 +61,9 @@ namespace YggdrAshill.Heimdallr.Explication
             /// <inheritdoc/>
             public void Indicate(TValue value)
             {
-                var notated = notation.Notate(value);
+                var note = notation.Notate(value);
 
-                indication.Indicate(notated);
+                indication.Indicate(note);
             }
         }
 
