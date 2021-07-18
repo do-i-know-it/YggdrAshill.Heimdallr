@@ -1,8 +1,20 @@
-﻿namespace YggdrAshill.Heimdallr.Elucidation
+namespace YggdrAshill.Heimdallr.Elucidation
 {
-    public interface IIndication<TItem>
-        where TItem : IItem
+    /// <summary>
+    /// Indicates <typeparamref name="TValue"/> received.
+    /// </summary>
+    /// <typeparam name="TValue">
+    /// Type of <see cref="IValue"/> to indicate.
+    /// </typeparam>
+    public interface IIndication<TValue>
+        where TValue : IValue
     {
-        void Indicate(TItem item);
+        /// <summary>
+        /// Receives <typeparamref name="TValue"/>.
+        /// </summary>
+        /// <param name="value">
+        /// <typeparamref name="TValue"/> received.
+        /// </param>
+        void Indicate(TValue value);
     }
 }

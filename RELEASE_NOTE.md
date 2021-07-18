@@ -1,5 +1,5 @@
-# Release notes for version 0.5.1
+# Release notes for version 1.0.0
 
-- Added GitHub actions to develop, assess and deploy.
-- Added templates for issues and pull requests.
-- Unified `Historization` module and `Items` module.
+- Modified architecture of framework.
+- Modified documents for framework.
+- Added samples for framework.

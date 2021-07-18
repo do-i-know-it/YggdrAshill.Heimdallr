@@ -3,24 +3,24 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
-    [TestFixture(TestOf = typeof(Indication<>))]
+    [TestFixture(TestOf = typeof(Indication))]
     internal class IndicationSpecification
     {
         [Test]
         public void ShouldExecuteActionWhenHasIndicated()
         {
             var expected = false;
-            var indication = new Indication<Item>(item =>
+            var indication = Indication.Of<Value>(value =>
             {
-                if (item == null)
+                if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(item));
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 expected = true;
             });
 
-            indication.Indicate(new Item());
+            indication.Indicate(new Value());
 
             Assert.IsTrue(expected);
         }
@@ -30,7 +30,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var indication = new Indication<Item>(null);
+                var indication = Indication.Of<Value>(default);
             });
         }
     }

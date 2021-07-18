@@ -6,199 +6,188 @@ using System;
 namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(ExplicationExtension))]
-    internal class ExplicationExtensionSpecification :
-        ITranslation<InputItem, OutputItem>,
-        INotation<Item>,
-        ICondition<Item>
+    internal class ExplicationExtensionSpecification
     {
-        #region ITranslation
+        private IObservation<Value> observation;
 
-        public OutputItem Translate(InputItem item)
+        [SetUp]
+        public void SetUp()
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            return new OutputItem();
-        }
-
-        #endregion
-
-        #region INotation
-
-        public Note Notate(Item item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            return new Note("");
-        }
-
-        #endregion
-
-        #region INotification
-
-        private bool expected;
-
-        public bool IsSatisfied(Item item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            return expected;
-        }
-
-        #endregion
-
-        [Test]
-        public void ShouldTranslateItem()
-        {
-            var publication = new Publication<InputItem>();
-            var translation = publication.Translate(this);
-
-            var expected = false;
-            var indication = new Indication<OutputItem>(item =>
-            {
-                if (item == null)
+            observation
+                = Evaluation.Of(() =>
                 {
-                    throw new ArgumentNullException(nameof(item));
-                }
+                    return new Value();
+                })
+                .ToObserve();
+        }
 
-                expected = true;
+        [TestCase("test")]
+        [TestCase("")]
+        public void IndicationShouldTranslateValue(string expected)
+        {
+            var indicated = Note.None;
+            var indication = Indication.Of<Note>(value =>
+            {
+                indicated = value;
             });
 
-            var unsubscription = translation.Subscribe(indication);
+            indication
+                .Translate<Value>(value =>
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
 
-            publication.Indicate(new InputItem());
+                    return new Note(expected);
+                })
+                .Indicate(new Value());
 
-            Assert.IsTrue(expected);
-
-            unsubscription.Unsubscribe();
+            Assert.AreEqual(expected, indicated.Content);
         }
 
-        [Test]
-        public void ShouldNotateItem()
+        [TestCase("test")]
+        [TestCase("")]
+        public void ObservationShouldTranslateValue(string expected)
         {
-            var publication = new Publication<Item>();
-            var notation = publication.Notate(this);
-
-            var expected = false;
-            var indication = new Indication<Note>(item =>
+            var indicated = Note.None;
+            var indication = Indication.Of<Note>(value =>
             {
-                if (item == null)
-                {
-                    throw new ArgumentNullException(nameof(item));
-                }
-
-                expected = true;
+                indicated = value;
             });
 
-            var unsubscription = notation.Subscribe(indication);
+            var inspection
+                = observation
+                .Translate(value =>
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
 
-            publication.Indicate(new Item());
+                    return new Note(expected);
+                })
+                .Observe(indication);
 
-            Assert.IsTrue(expected);
+            inspection.Inspect();
 
-            unsubscription.Unsubscribe();
+            Assert.AreEqual(expected, indicated.Content);
         }
 
         [TestCase(true)]
         [TestCase(false)]
-        public void ShouldNotifyItem(bool expected)
+        public void IndicationShouldDetectValue(bool expected)
         {
-            this.expected = expected;
-
-            var publication = new Publication<Item>();
-            var notification = publication.Notify(this);
-
-            var notified = false;
-            var indication = new Indication<Notice>(item =>
+            var indicated = false;
+            var indication = Indication.Of<Notice>(value =>
             {
-                if (item == null)
+                if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(item));
+                    throw new ArgumentNullException(nameof(value));
                 }
 
-                notified = true;
+                indicated = true;
             });
 
-            var unsubscription = notification.Subscribe(indication);
+            indication
+                .Detect<Value>(value =>
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
 
-            publication.Indicate(new Item());
+                    return expected;
+                })
+                .Indicate(new Value());
 
-            Assert.AreEqual(expected, notified);
+            Assert.AreEqual(expected, indicated);
+        }
 
-            unsubscription.Unsubscribe();
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ObservationShouldDetectValue(bool expected)
+        {
+            var indicated = false;
+            var inspection
+                = observation
+                .Detect(value =>
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
+
+                    return expected;
+                })
+                .Observe(value =>
+                {
+                    if (value == null)
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
+
+                    indicated = true;
+                });
+
+            inspection.Inspect();
+
+            Assert.AreEqual(expected, indicated);
         }
 
         [Test]
-        public void CannotTranslateWithNullSubscription()
+        public void IndicationCannotTranslateValueWithNull()
         {
-            var subscription = default(ISubscription<InputItem>);
-
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notation = subscription.Translate(this);
+                var translated = default(IIndication<Note>).Translate(NoteOf.None<Value>());
             });
-        }
-
-        [Test]
-        public void CannotTranslateWithNullTranslation()
-        {
-            var publication = new Publication<InputItem>();
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translation = publication.Translate((ITranslation<InputItem, OutputItem>)null);
-            });
-        }
-
-        [Test]
-        public void CannotNotateWithNullSubscription()
-        {
-            var subscription = default(ISubscription<Item>);
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var notation = subscription.Notate(this);
-            });
-        }
-
-        [Test]
-        public void CannotNotateWithNullNotation()
-        {
-            var publication = new Publication<Item>();
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var notation = publication.Notate((INotation<Item>)null);
-            });
-        }
-
-        [Test]
-        public void CannotNotifyWithNullSubscription()
-        {
-            var subscription = default(ISubscription<Item>);
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                var notification = subscription.Notify(this);
+                var translated = Indication.None<Note>().Translate(default(Func<Value, Note>));
             });
         }
 
         [Test]
-        public void CannotNotifyWithNullNotification()
+        public void ObservationCannotTranslateValueWithNull()
         {
-            var publication = new Publication<Item>();
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var translated = default(IObservation<Value>).Translate(NoteOf.None<Value>());
+            });
 
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var notification = publication.Notify(null);
+                var translated = observation.Translate(default);
+            });
+        }
+
+        [Test]
+        public void IndicationCannotDetectValueWithNull()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var detected = default(IIndication<Notice>).Detect(NoticeOf.None<Value>());
+            });
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var detected = Indication.None<Notice>().Detect(default(ICondition<Value>));
+            });
+        }
+
+        [Test]
+        public void ObservationCannotDetectValueWithNull()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var detected = default(IObservation<Value>).Detect(NoticeOf.None<Value>());
+            });
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var detected = observation.Detect(default);
             });
         }
     }

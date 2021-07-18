@@ -1,6 +1,11 @@
 # Explication
 
-Explication extends [Elucidation](./Elucidation.md) to define how to convert `Item`.
+This module extends [Elucidation](./Elucidation.md) to define how to
+
+- translate
+- detect
+
+`Value`.
 
 ## Dependencies
 
@@ -10,18 +15,21 @@ This module depends on [Elucidation](./Elucidation.md).
 
 | Word | Abstraction |
 |:-----------|:------------|
-| Translation | Converts one `Item` to another `Item`. |
-| Notation | Describes `Item`. |
-| Condition | Criteria to notify. |
-| Notice | `Item` to send when `Condition` is satisfied by `Item`. |
-| Notification | Notifies `Notice` when `Condition` is satisfied by `Item`. |
+| Note | `Value` to describe other `Value`. |
+| Translation | Converts `Value` to `Note`. |
+| Condition | Criteria to detect. |
+| Notice | `Value` to send when `Condition` is satisfied by other `Value`. |
 
 This module enables developers to
 
-- translate one `Item` to other `Item`.
-- notate `item` as text by formatting.
-- notify when conditions are satisfied by `Item`.
+- translate `Value` to `Note`.
+- detect `Notice` of `Value`.
 
 ## Implementation
 
-Nothing except internal implementation for some interfaces of [Elucidation](./Elucidation.md), because this module only defines how to convert `Item`.
+Nothing except internal implementation for some interfaces of [Elucidation](./Elucidation.md), because this module only defines how to
+
+- translate
+- detect
+
+`Value`.
