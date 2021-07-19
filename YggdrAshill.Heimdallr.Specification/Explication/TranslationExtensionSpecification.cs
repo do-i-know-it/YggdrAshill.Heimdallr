@@ -7,14 +7,28 @@ namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(TranslationExtension))]
     internal class TranslationExtensionSpecification :
-        IEvaluation<Value>,
+        IInspection,
+        IObservation<Value>,
         IIndication<Note>,
         INotation<Value>
     {
+        private IIndication<Value> toInspect;
+
         private Value evaluated;
-        public Value Evaluate()
+        public IInspection Observe(IIndication<Value> indication)
         {
-            return evaluated;
+            if (indication == null)
+            {
+                throw new ArgumentNullException(nameof(indication));
+            }
+
+            toInspect = indication;
+
+            return this;
+        }
+        public void Inspect()
+        {
+            toInspect.Indicate(evaluated);
         }
 
         private Note indicated;
@@ -44,7 +58,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void SetUp()
         {
             evaluated = new Value();
-            observation = this.ToObserve();
+            observation = this;
 
             expected = null;
             notation = this;

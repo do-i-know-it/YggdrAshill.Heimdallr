@@ -9,7 +9,7 @@ namespace YggdrAshill.Heimdallr
     public static class ElucidationExtension
     {
         /// <summary>
-        /// Sends <typeparamref name="TValue"/> to <see cref="Action{T}"/>.
+        /// Sends <typeparamref name="TValue"/>.
         /// </summary>
         /// <param name="observation">
         /// <see cref="IObservation{TValue}"/> to send <typeparamref name="TValue"/>.
@@ -20,10 +20,10 @@ namespace YggdrAshill.Heimdallr
         /// <returns>
         /// <see cref="IInspection"/> to inspect.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="observation"/> is null.
         /// </exception>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// Thrown if <paramref name="indication"/> is null.
         /// </exception>
         public static IInspection Observe<TValue>(this IObservation<TValue> observation, Action<TValue> indication)

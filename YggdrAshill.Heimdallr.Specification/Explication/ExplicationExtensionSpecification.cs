@@ -14,11 +14,10 @@ namespace YggdrAshill.Heimdallr.Specification
         public void SetUp()
         {
             observation
-                = Evaluation.Of(() =>
+                = Observation.Of(() =>
                 {
                     return new Value();
-                })
-                .ToObserve();
+                });
         }
 
         [TestCase("test")]
