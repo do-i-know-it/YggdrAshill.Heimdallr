@@ -5,14 +5,9 @@ using System;
 namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(ElucidationExtension))]
-    internal class ElucidationExtensionSpecification :
-        IEvaluation<Value>
+    internal class ElucidationExtensionSpecification
     {
         private Value expected;
-        public Value Evaluate()
-        {
-            return expected;
-        }
 
         private IObservation<Value> observation;
 
@@ -21,7 +16,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             expected = new Value();
 
-            observation = this.ToObserve();
+            observation = Observation.Of(expected);
         }
 
         [Test]

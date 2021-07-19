@@ -7,14 +7,28 @@ namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(DetectionExtension))]
     internal class DetectionExtensionSpecification :
-        IEvaluation<Value>,
+        IInspection,
+        IObservation<Value>,
         IIndication<Notice>,
         ICondition<Value>
     {
+        private IIndication<Value> toInspect;
+
         private Value evaluated;
-        public Value Evaluate()
+        public IInspection Observe(IIndication<Value> indication)
         {
-            return evaluated;
+            if (indication == null)
+            {
+                throw new ArgumentNullException(nameof(indication));
+            }
+
+            toInspect = indication;
+
+            return this;
+        }
+        public void Inspect()
+        {
+            toInspect.Indicate(evaluated);
         }
 
         private bool indicated;
@@ -49,7 +63,7 @@ namespace YggdrAshill.Heimdallr.Specification
         public void SetUp()
         {
             evaluated = new Value();
-            observation = this.ToObserve();
+            observation = this;
 
             expected = false;
             condition = this;
