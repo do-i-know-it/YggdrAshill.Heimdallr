@@ -10,6 +10,9 @@ namespace YggdrAshill.Heimdallr.Explication
         IValue,
         IEquatable<Note>
     {
+        /// <summary>
+        /// <see cref="None"/> of <see cref="Note"/>.
+        /// </summary>
         public static Note None { get; } = new Note(string.Empty);
 
         private string content;
@@ -20,17 +23,24 @@ namespace YggdrAshill.Heimdallr.Explication
         {
             get
             {
-                if (!initialized)
-                {
-                    content = string.Empty;
-
-                    initialized = true;
-                }
+                InitializeIfNeed();
 
                 return content;
             }
         }
+
         private bool initialized;
+        private void InitializeIfNeed()
+        {
+            if (initialized)
+            {
+                return;
+            }
+
+            content = string.Empty;
+
+            initialized = true;
+        }
 
         /// <summary>
         /// Constructs an instance.
