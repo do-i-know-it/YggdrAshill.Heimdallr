@@ -18,7 +18,7 @@ namespace YggdrAshill.Heimdallr.Samples
                 var input = Console.ReadLine();
                 if (input == "q")
                 {
-                    Console.WriteLine("quit.");
+                    indication.Record(Log.Severity.Fatal, "quit.");
                     return;
                 }
 
