@@ -3,6 +3,9 @@ using System;
 
 namespace YggdrAshill.Heimdallr.Explication
 {
+    /// <summary>
+    /// Defines extensions for <see cref="ICondition{TValue}"/>.
+    /// </summary>
     public static class ConditionExtension
     {
         /// <summary>

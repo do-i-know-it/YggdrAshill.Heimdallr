@@ -4,7 +4,7 @@ using System;
 namespace YggdrAshill.Heimdallr.Explication
 {
     /// <summary>
-    /// Defines extensions for <see cref="ITranslation{TInput, TOutput}"/>.
+    /// Defines extensions for <see cref="INotation{TValue}"/>.
     /// </summary>
     public static class TranslationExtension
     {

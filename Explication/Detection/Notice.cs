@@ -1,5 +1,4 @@
 using YggdrAshill.Heimdallr.Elucidation;
-using System;
 
 namespace YggdrAshill.Heimdallr.Explication
 {
@@ -7,14 +6,12 @@ namespace YggdrAshill.Heimdallr.Explication
     /// Implementation of <see cref="IValue"/>.
     /// </summary>
     public sealed class Notice :
-        IValue,
-        IEquatable<Notice>
+        IValue
     {
         /// <summary>
         /// Only <see cref="Notice"/> that exists.
         /// </summary>
-        public static Notice Instance { get; }
-            = new Notice();
+        public static Notice Instance { get; } = new Notice();
 
         private Notice()
         {
@@ -22,9 +19,15 @@ namespace YggdrAshill.Heimdallr.Explication
         }
 
         /// <inheritdoc/>
-        public bool Equals(Notice other)
+        public override string ToString()
         {
-            return ReferenceEquals(this, other);
+            return $"{nameof(Notice)}";
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return 0;
         }
     }
 }

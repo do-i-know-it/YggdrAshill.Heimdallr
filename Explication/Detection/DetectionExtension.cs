@@ -1,8 +1,11 @@
-﻿using YggdrAshill.Heimdallr.Elucidation;
+using YggdrAshill.Heimdallr.Elucidation;
 using System;
 
 namespace YggdrAshill.Heimdallr.Explication
 {
+    /// <summary>
+    /// Defines how to detect some types of <see cref="IValue"/>.
+    /// </summary>
     public static class DetectionExtension
     {
         /// <summary>
