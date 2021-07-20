@@ -53,9 +53,9 @@ namespace YggdrAshill.Heimdallr.Explication
 
             internal Indication(INotation<TValue> notation, IIndication<Note> indication)
             {
-                this.indication = indication;
-
                 this.notation = notation;
+
+                this.indication = indication;
             }
 
             /// <inheritdoc/>

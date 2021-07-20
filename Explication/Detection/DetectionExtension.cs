@@ -44,15 +44,15 @@ namespace YggdrAshill.Heimdallr.Explication
             IIndication<TValue>
             where TValue : IValue
         {
-            private readonly IIndication<Notice> indication;
-
             private readonly ICondition<TValue> condition;
+
+            private readonly IIndication<Notice> indication;
 
             internal Indication(ICondition<TValue> condition, IIndication<Notice> indication)
             {
-                this.indication = indication;
-
                 this.condition = condition;
+
+                this.indication = indication;
             }
 
             /// <inheritdoc/>
