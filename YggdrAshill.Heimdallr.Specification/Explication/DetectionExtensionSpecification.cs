@@ -1,99 +1,47 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
+using YggdrAshill.Heimdallr.Elucidation;
 using YggdrAshill.Heimdallr.Explication;
 using System;
-using YggdrAshill.Heimdallr.Elucidation;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(DetectionExtension))]
-    internal class DetectionExtensionSpecification :
-        IInspection,
-        IObservation<Value>,
-        IIndication<Notice>,
-        ICondition<Value>
+    internal class DetectionExtensionSpecification
     {
-        private IIndication<Value> toInspect;
+        private FakeObservation<Value> observation;
 
-        private Value evaluated;
-        public IInspection Observe(IIndication<Value> indication)
-        {
-            if (indication == null)
-            {
-                throw new ArgumentNullException(nameof(indication));
-            }
-
-            toInspect = indication;
-
-            return this;
-        }
-        public void Inspect()
-        {
-            toInspect.Indicate(evaluated);
-        }
-
-        private bool indicated;
-        public void Indicate(Notice value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            indicated = true;
-        }
-
-        private bool expected;
-        public bool IsSatisfiedBy(Value value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            return expected;
-        }
-
-        private IObservation<Value> observation;
-
-        private ICondition<Value> condition;
-
-        private IIndication<Notice> indication;
+        private IndicateNotice indication;
 
         [SetUp]
         public void SetUp()
         {
-            evaluated = new Value();
-            observation = this;
+            observation = new FakeObservation<Value>(new Value());
 
-            expected = false;
-            condition = this;
-
-            indicated = false;
-            indication = this;
+            indication = new IndicateNotice();
         }
 
         [TestCase(true)]
         [TestCase(false)]
         public void IndicationShouldDetectValue(bool expected)
         {
-            this.expected = expected;
+            var condition = new NoticeOfValue(expected);
 
             indication.Detect(condition).Indicate(new Value());
 
-            Assert.AreEqual(expected, indicated);
+            Assert.AreEqual(expected, indication.Indicated);
         }
 
         [TestCase(true)]
         [TestCase(false)]
         public void ObservationShouldDetectValue(bool expected)
         {
-            this.expected = expected;
+            var condition = new NoticeOfValue(expected);
 
             var inspection = observation.Detect(condition).Observe(indication);
 
             inspection.Inspect();
 
-            Assert.AreEqual(expected, indicated);
+            Assert.AreEqual(expected, indication.Indicated);
         }
 
         [Test]
@@ -101,7 +49,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var detected = default(IIndication<Notice>).Detect(condition);
+                var detected = default(IIndication<Notice>).Detect(new NoticeOfValue());
             });
 
             Assert.Throws<ArgumentNullException>(() =>
@@ -115,7 +63,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var detected = default(IObservation<Value>).Detect(condition);
+                var detected = default(IObservation<Value>).Detect(new NoticeOfValue());
             });
 
             Assert.Throws<ArgumentNullException>(() =>

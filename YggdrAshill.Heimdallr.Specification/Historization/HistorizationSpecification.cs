@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using YggdrAshill.Heimdallr.Elucidation;
 using YggdrAshill.Heimdallr.Historization;
 using System;
 
@@ -7,24 +6,14 @@ namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(Log))]
     [TestFixture(TestOf = typeof(LogExtension))]
-    internal class HistorizationSpecification :
-        IIndication<Log>
+    internal class HistorizationSpecification
     {
-        private Log recorded;
-
-        public void Indicate(Log value)
-        {
-            recorded = value;
-        }
-
-        private IIndication<Log> indication;
+        private FakeIndication<Log> indication;
 
         [SetUp]
         public void SetUp()
         {
-            recorded = default;
-
-            indication = this;
+            indication = new FakeIndication<Log>(new Log());
         }
 
         [TestCase(Log.Severity.Fatal, "message")]
@@ -33,8 +22,8 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             indication.Record(level, message);
 
-            Assert.AreEqual(level, recorded.Level);
-            Assert.AreEqual(message, recorded.Message);
+            Assert.AreEqual(level, indication.Indicated.Level);
+            Assert.AreEqual(message, indication.Indicated.Message);
         }
 
         [TestCase(Log.Severity.Fatal, "message")]
@@ -45,10 +34,10 @@ namespace YggdrAshill.Heimdallr.Specification
 
             indication.Record(level, expected);
 
-            Assert.AreEqual(level, recorded.Level);
-            Assert.AreEqual(expected.ToString(), recorded.Message);
+            Assert.AreEqual(level, indication.Indicated.Level);
+            Assert.AreEqual(expected.ToString(), indication.Indicated.Message);
 
-            Console.WriteLine(recorded.Message);
+            Console.WriteLine(indication.Indicated.Message);
         }
     }
 }

@@ -1,94 +1,47 @@
 using NUnit.Framework;
+using YggdrAshill.Heimdallr.Elucidation;
 using YggdrAshill.Heimdallr.Explication;
 using System;
-using YggdrAshill.Heimdallr.Elucidation;
 
 namespace YggdrAshill.Heimdallr.Specification
 {
     [TestFixture(TestOf = typeof(TranslationExtension))]
-    internal class TranslationExtensionSpecification :
-        IInspection,
-        IObservation<Value>,
-        IIndication<Note>,
-        INotation<Value>
+    internal class TranslationExtensionSpecification
     {
-        private IIndication<Value> toInspect;
+        private FakeObservation<Value> observation;
 
-        private Value evaluated;
-        public IInspection Observe(IIndication<Value> indication)
-        {
-            if (indication == null)
-            {
-                throw new ArgumentNullException(nameof(indication));
-            }
-
-            toInspect = indication;
-
-            return this;
-        }
-        public void Inspect()
-        {
-            toInspect.Indicate(evaluated);
-        }
-
-        private Note indicated;
-        public void Indicate(Note value)
-        {
-            indicated = value;
-        }
-
-        private string expected;
-        public Note Notate(Value value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            return new Note(expected);
-        }
-
-        private IObservation<Value> observation;
-
-        private INotation<Value> notation;
-
-        private IIndication<Note> indication;
+        private FakeIndication<Note> indication;
 
         [SetUp]
         public void SetUp()
         {
-            evaluated = new Value();
-            observation = this;
+            observation = new FakeObservation<Value>(new Value());
 
-            expected = null;
-            notation = this;
-
-            indicated = Note.None;
-            indication = this;
+            indication = new FakeIndication<Note>(Note.None);
         }
 
         [TestCase("test")]
         [TestCase("")]
         public void IndicationShouldTranslateValue(string expected)
         {
-            this.expected = expected;
+            var notation = new NoteOfValue(expected);
 
             indication.Translate(notation).Indicate(new Value());
 
-            Assert.AreEqual(expected, indicated.Content);
+            Assert.AreEqual(expected, indication.Indicated.Content);
         }
 
         [TestCase("test")]
         [TestCase("")]
         public void ObservationShouldTranslateValue(string expected)
         {
-            this.expected = expected;
+            var notation = new NoteOfValue(expected);
 
             var inspection = observation.Translate(notation).Observe(indication);
 
             inspection.Inspect();
 
-            Assert.AreEqual(expected, indicated.Content);
+            Assert.AreEqual(expected, indication.Indicated.Content);
         }
 
         [Test]
@@ -96,7 +49,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translated = default(IIndication<Note>).Translate(notation);
+                var translated = default(IIndication<Note>).Translate(new NoteOfValue());
             });
 
             Assert.Throws<ArgumentNullException>(() =>
@@ -110,7 +63,7 @@ namespace YggdrAshill.Heimdallr.Specification
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                var translated = default(IObservation<Value>).Translate(notation);
+                var translated = default(IObservation<Value>).Translate(new NoteOfValue());
             });
 
             Assert.Throws<ArgumentNullException>(() =>
